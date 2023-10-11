@@ -1,5 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Header from "./components/Layout/header/Header";
+import Menu from "./components/menu/Menu";
 
 function App() {
   return (
@@ -10,6 +12,7 @@ function App() {
             <Route path="/" element={<></>} />
           </Routes>
         </div>
+        <Menu />
       </BrowserRouter>
     </>
   );
