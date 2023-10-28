@@ -4,9 +4,9 @@ function Login() {
   return (
     <Container>
       <TitleSpan>회원 로그인</TitleSpan>
-      <InputBox type="text" placeholder="아이디 입력" />
-      <InputBox type="text" placeholder="비밀번호 입력" />
-      <LoginBox>로그인</LoginBox>
+      <InputBox type="id" placeholder="아이디 입력" />
+      <InputBox type="password" placeholder="비밀번호 입력" />
+      <LoginBtn>로그인</LoginBtn>
       <NavBox>
         <NavDiv>
           <NavSpan>ID/PW 찾기</NavSpan>
@@ -28,7 +28,8 @@ const Container = styled.div`
 `;
 
 const TitleSpan = styled.span`
-  font-size: larger;
+  font-size: x-large;
+  font-weight: 600;
   margin: 30px 0px;
 `;
 
@@ -42,10 +43,11 @@ const InputBox = styled.input`
   margin-bottom: 15px;
 `;
 
-const LoginBox = styled.div`
+const LoginBtn = styled.button`
   width: 333px;
   height: 60px;
   border-radius: 15px;
+  border: none;
   background-color: #dceeff;
   margin: 15px 0;
   display: flex;
