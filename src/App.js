@@ -4,6 +4,7 @@ import Header from "./components/Layout/header/Header";
 import Menu from "./components/menu/Menu";
 import SearchPage from "./pages/SearchPage";
 import RecycleExplain from "./pages/RecycleExplainPage";
+import TrashCanList from "./pages/TrashCanListPage";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
             <Route path="/" element={<></>} />
             <Route path="/search" element={<SearchPage />} />
             <Route path="/explain" element={<RecycleExplain />} />
+            <Route path="/trashcan" element={<TrashCanList />} />
           </Routes>
         </div>
       </BrowserRouter>
