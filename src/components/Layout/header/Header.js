@@ -5,7 +5,13 @@ function Header() {
   return (
     <Container>
       <TfiMenu className="menu-icon" />
-      <Logo>TRAP</Logo>
+      <Logo
+        onClick={() => {
+          window.location.href = "/";
+        }}
+      >
+        TRAP
+      </Logo>
     </Container>
   );
 }
@@ -14,11 +20,12 @@ const Logo = styled.span`
   font-size: 38px;
   font-weight: 700;
   color: #1d70b6;
+  cursor: pointer;
 `;
 
 const Container = styled.header`
-  position: fixed;
-  top: 0;
+  //position: fixed;
+  //top: 0;
   width: 100%;
   height: 80px;
   background-color: #dceeff;
