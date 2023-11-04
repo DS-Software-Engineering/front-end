@@ -1,6 +1,8 @@
+import React, { useState } from "react";
 import styled from "styled-components";
 import { TfiClose } from "react-icons/tfi";
 import { BsChevronRight } from "react-icons/bs";
+//import MenuCard from "./MenuCard";
 
 function Profile() {
   return (
@@ -25,24 +27,72 @@ function MenuCard({ menuName }) {
   );
 }
 
-function Menu() {
+function Menu({ onClose }) {
+  const handleClose = () => {
+    onClose?.();
+  };
+
   return (
     <>
       <Container>
         <Header>
-          <Logo>TRAP</Logo>
-          <TfiClose className="close-icon" />
+          <Logo
+            onClick={() => {
+              window.location.href = "/";
+            }}
+          >
+            TRAP
+          </Logo>
+          <span onClick={handleClose}>
+            <TfiClose className="close-icon" />
+          </span>
         </Header>
         <Profile />
         <MenuText>[ Menu ]</MenuText>
         <MenuBox>
-          <MenuCard menuName="쓰레기통 지도" />
-          <MenuCard menuName="쓰레기통 리스트" />
-          <MenuCard menuName="신고 및 건의하기" />
-          <MenuCard menuName="주요 처리 사례" />
-          <MenuCard menuName="마이페이지" />
+          <span
+            onClick={() => {
+              window.location.href = "/";
+            }}
+          >
+            <MenuCard menuName="쓰레기통 지도" />
+          </span>
+          <span
+            onClick={() => {
+              window.location.href = "/trashcan";
+            }}
+          >
+            <MenuCard menuName="쓰레기통 리스트" />
+          </span>
+          <span
+            onClick={() => {
+              window.location.href = "/report";
+            }}
+          >
+            <MenuCard menuName="신고 및 건의하기" />
+          </span>
+          <span
+            onClick={() => {
+              window.location.href = "/mainexample";
+            }}
+          >
+            <MenuCard menuName="주요 처리 사례" />
+          </span>
+          <span
+            onClick={() => {
+              window.location.href = "/mypage";
+            }}
+          >
+            <MenuCard menuName="마이페이지" />
+          </span>
         </MenuBox>
-        <LogInBox>로그인</LogInBox>
+        <LogInBox
+          onClick={() => {
+            window.location.href = "/login";
+          }}
+        >
+          로그인
+        </LogInBox>
       </Container>
     </>
   );
@@ -51,11 +101,15 @@ function Menu() {
 const Container = styled.div`
   border: 1px solid black;
   width: 250px;
-  height: 100%;
+  height: 100vh;
   position: fixed;
+  top: 0px;
+  left: 0px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: #ffffff;
+  z-index: 9999;
 `;
 
 const Header = styled.div`
@@ -66,10 +120,12 @@ const Header = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 0 15px 0 15px;
+  background-color: #ffffff;
 
   .close-icon {
     font-size: 30px;
     color: black;
+    cursor: pointer;
   }
 `;
 
@@ -77,6 +133,7 @@ const Logo = styled.span`
   font-size: 38px;
   font-weight: 700;
   color: #1d70b6;
+  cursor: pointer;
 `;
 
 const ProfileBox = styled.div`
@@ -132,6 +189,7 @@ const MenuInnerBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  z-index: 999;
 `;
 
 const MenuName = styled.span`
@@ -152,6 +210,7 @@ const LogInBox = styled.div`
   font-weight: 700;
   position: fixed;
   bottom: 10px;
+  cursor: pointer;
 `;
 
 export default Menu;
