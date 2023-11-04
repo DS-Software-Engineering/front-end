@@ -1,18 +1,36 @@
+import React, { useState } from "react";
 import styled from "styled-components";
 import { TfiMenu } from "react-icons/tfi";
+import Menu from "../../menu/Menu";
 
 function Header() {
+  // 메뉴바 열기
+  const [isOpen, setIsOpen] = useState(false);
+  const onClickButton = () => {
+    setIsOpen(true);
+  };
+
   return (
-    <Container>
-      <TfiMenu className="menu-icon" />
-      <Logo
-        onClick={() => {
-          window.location.href = "/";
-        }}
-      >
-        TRAP
-      </Logo>
-    </Container>
+    <>
+      <Container>
+        <TfiMenu className="menu-icon" onClick={onClickButton} />
+        <Logo
+          onClick={() => {
+            window.location.href = "/";
+          }}
+        >
+          TRAP
+        </Logo>
+      </Container>
+      {isOpen && (
+        <Menu
+          open={isOpen}
+          onClose={() => {
+            setIsOpen(false);
+          }}
+        />
+      )}
+    </>
   );
 }
 
