@@ -27,10 +27,13 @@ const Container = styled.div`
   margin-top: 80px;
 `;
 
-const TitleSpan = styled.span`
-  font-size: x-large;
+const TitleSpan = styled.div`
+  font-size: larger;
   font-weight: 600;
   margin: 30px 0px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
 `;
 
 const InputBox = styled.input`
