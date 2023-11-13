@@ -7,6 +7,7 @@ import RecycleExplain from "./pages/RecycleExplainPage";
 import TrashCanList from "./pages/TrashCanListPage";
 import MainExample from "./pages/MainExample";
 import MainExampleDetail from "./pages/MainExampleDetail";
+import Base from "./components/main/BottomSheet/Base";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path="/trashcan" element={<TrashCanList />} />
             <Route path="/mainexample" element={<MainExample />} />
             <Route path="/mainexample/detail" element={<MainExampleDetail />} />
+            <Route path="/base" element={<Base />} />
           </Routes>
         </div>
       </BrowserRouter>
