@@ -1,3 +1,4 @@
+import React from "react";
 import styled from "styled-components";
 
 function Login() {
@@ -9,11 +10,23 @@ function Login() {
       <LoginBtn>로그인</LoginBtn>
       <NavBox>
         <NavDiv>
-          <NavSpan>ID/PW 찾기</NavSpan>
+          <NavSpan
+            onClick={() => {
+              window.location.href = "/login/find_id";
+            }}
+          >
+            ID/PW 찾기
+          </NavSpan>
         </NavDiv>
         <NavDivider></NavDivider>
         <NavDiv2>
-          <NavSpan>회원가입</NavSpan>
+          <NavSpan
+            onClick={() => {
+              window.location.href = "/signup";
+            }}
+          >
+            회원가입
+          </NavSpan>
         </NavDiv2>
       </NavBox>
     </Container>

@@ -22,7 +22,13 @@ function ReportWaterway() {
         <SubTitleSpan>설명</SubTitleSpan>
         <ExplainTextBox placeholder="신고 사진에 대한 설명을 적어주세요." />
       </Box2>
-      <NextBtn>신고 완료!</NextBtn>
+      <NextBtn
+        onClick={() => {
+          window.location.href = "/report/complete";
+        }}
+      >
+        신고 완료!
+      </NextBtn>
     </Container>
   );
 }
@@ -31,7 +37,6 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 80px;
 `;
 
 const TitleSpan = styled.div`

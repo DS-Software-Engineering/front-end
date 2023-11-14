@@ -5,13 +5,25 @@ function Report() {
   return (
     <Container>
       <TitleSpan>신고</TitleSpan>
-      <TapBox>
+      {/* <TapBox>
         <SelectedTapBtn>신고</SelectedTapBtn>
         <TapBtn>건의</TapBtn>
-      </TapBox>
-      <ReportBtn>무단투기 지역 신고</ReportBtn>
-      <ReportBtn>배수구 막힘 신고</ReportBtn>
-      <NextBtn>다음</NextBtn>
+      </TapBox> */}
+      <ReportBtn
+        onClick={() => {
+          window.location.href = "/report/trash";
+        }}
+      >
+        무단투기 지역 신고
+      </ReportBtn>
+      <ReportBtn
+        onClick={() => {
+          window.location.href = "/report/waterway";
+        }}
+      >
+        배수구 막힘 신고
+      </ReportBtn>
+      {/* <NextBtn>다음</NextBtn> */}
     </Container>
   );
 }
@@ -20,7 +32,6 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 80px;
 `;
 
 const TitleSpan = styled.div`

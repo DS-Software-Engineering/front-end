@@ -1,3 +1,4 @@
+import React from "react";
 import styled from "styled-components";
 
 function FindPW() {
@@ -5,7 +6,13 @@ function FindPW() {
     <Container>
       <NavBox>
         <NavDiv>
-          <NavSpan>ID 찾기</NavSpan>
+          <NavSpan
+            onClick={() => {
+              window.location.href = "/login/find_id";
+            }}
+          >
+            ID 찾기
+          </NavSpan>
         </NavDiv>
         <NavDivider></NavDivider>
         <NavDiv2>
@@ -74,7 +81,6 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 80px;
 `;
 
 const InnerBox = styled.div`

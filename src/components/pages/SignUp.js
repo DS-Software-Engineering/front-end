@@ -38,7 +38,13 @@ function SignUp() {
         <Input type="text" placeholder="인증번호 6자리를 입력해주세요." />
         <CheckBtn>확인</CheckBtn>
       </InputBox>
-      <NextBtn>다음</NextBtn>
+      <NextBtn
+        onClick={() => {
+          window.location.href = "/signup/terms";
+        }}
+      >
+        다음
+      </NextBtn>
     </Container>
   );
 }
@@ -46,7 +52,6 @@ function SignUp() {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 80px;
   padding: 0 15px;
 `;
 
