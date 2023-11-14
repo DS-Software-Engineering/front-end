@@ -11,7 +11,13 @@ function ReportComplete() {
         <MdStars style={{ marginRight: "10px" }} />
         포인트 지급 완료!
       </Reward>
-      <GotoRewardBtn>내 포인트 확인하러 가기</GotoRewardBtn>
+      <GotoRewardBtn
+        onClick={() => {
+          window.location.href = "/mypage/reward";
+        }}
+      >
+        내 포인트 확인하러 가기
+      </GotoRewardBtn>
     </Container>
   );
 }
