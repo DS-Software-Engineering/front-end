@@ -7,7 +7,11 @@ import { BsChevronRight } from "react-icons/bs";
 function Profile() {
   return (
     <ProfileBox>
-      <InnerBox>
+      <InnerBox
+        onClick={() => {
+          window.location.href = "/login";
+        }}
+      >
         <ProfileText>로그인 후 이용하세요</ProfileText>
         <RewardBox>
           <Reward>R</Reward>

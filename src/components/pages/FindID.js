@@ -10,7 +10,13 @@ function FindID() {
         </NavDiv>
         <NavDivider></NavDivider>
         <NavDiv2>
-          <NavSpan>PW 찾기</NavSpan>
+          <NavSpan
+            onClick={() => {
+              window.location.href = "/login/find_pw";
+            }}
+          >
+            PW 찾기
+          </NavSpan>
         </NavDiv2>
       </NavBox>
       <InnerBox>
@@ -47,7 +53,6 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 80px;
 `;
 
 const InnerBox = styled.div`

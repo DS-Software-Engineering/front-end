@@ -24,6 +24,7 @@ function App() {
             <Route path="/mainexample" element={<MainExample />} />
             <Route path="/mainexample/detail" element={<MainExampleDetail />} />
             <Route path="/base" element={<Base />} />
+
           </Routes>
         </div>
       </BrowserRouter>
