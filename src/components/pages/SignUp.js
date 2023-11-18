@@ -1,12 +1,42 @@
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { postSignup } from "../../api/Auth";
 
 function SignUp() {
+  const [userid, setUserId] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordCheck, setPasswordCheck] = useState("");
+  const [nickname, setNickname] = useState("");
+  const [phonenum, setPhonenum] = useState("");
+
+  // 회원가입 API 연동
+  const handleButton = async () => {
+    const data = {
+      userid: userid,
+      nickname: nickname,
+      password: password,
+      phonenum: phonenum,
+    };
+    try {
+      const response = await postSignup(data);
+      console.log("성공");
+      //window.location.href = "/";
+    } catch (error) {
+      console.error("오류");
+    }
+  };
+
   return (
     <Container>
       <TitleSpan>회원 가입</TitleSpan>
       <SubTitle>아이디*</SubTitle>
       <InputBox>
-        <Input type="id" placeholder="아이디를 입력해주세요." />
+        <Input
+          type="id"
+          placeholder="아이디를 입력해주세요."
+          value={userid}
+          onChange={(e) => setUserId(e.target.value)}
+        />
         <CheckBtn>중복 확인</CheckBtn>
       </InputBox>
       <SubTitle>비밀번호*</SubTitle>
@@ -14,6 +44,8 @@ function SignUp() {
         <Input2
           type="password"
           placeholder="비밀번호를 입력해주세요. (8~15자,영 대/소문자, 숫자 조합)"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
         />
       </InputBox>
       <SubTitle>비밀번호 재입력*</SubTitle>
@@ -21,30 +53,31 @@ function SignUp() {
         <Input2
           type="password"
           placeholder="비밀번호를 다시 한번 입력해주세요."
+          value={passwordCheck}
+          onChange={(e) => setPasswordCheck(e.target.value)}
         />
       </InputBox>
       <SubTitle>닉네임*</SubTitle>
       <InputBox>
-        <Input type="text" placeholder="닉네임을 입력해주세요. (5자 이하)" />
+        <Input
+          type="text"
+          placeholder="닉네임을 입력해주세요. (5자 이하)"
+          value={nickname}
+          onChange={(e) => setNickname(e.target.value)}
+        />
         <CheckBtn>중복 확인</CheckBtn>
       </InputBox>
       <SubTitle>휴대폰 번호*</SubTitle>
       <InputBox>
-        <Input type="text" placeholder="휴대폰 번호를 입력해주세요." />
+        <Input
+          type="text"
+          placeholder="휴대폰 번호를 입력해주세요."
+          value={phonenum}
+          onChange={(e) => setPhonenum(e.target.value)}
+        />
         <CheckBtn>인증 번호 발송</CheckBtn>
       </InputBox>
-      <SubTitle>휴대폰 본인 인증*</SubTitle>
-      <InputBox>
-        <Input type="text" placeholder="인증번호 6자리를 입력해주세요." />
-        <CheckBtn>확인</CheckBtn>
-      </InputBox>
-      <NextBtn
-        onClick={() => {
-          window.location.href = "/signup/terms";
-        }}
-      >
-        다음
-      </NextBtn>
+      <NextBtn onClick={handleButton}>가입하기</NextBtn>
     </Container>
   );
 }

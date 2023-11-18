@@ -1,4 +1,4 @@
-import { request } from "./client";
+import { request } from "./Client";
 
 export const getMap = async () => {
   try {

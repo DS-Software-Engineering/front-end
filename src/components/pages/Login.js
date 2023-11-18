@@ -1,13 +1,62 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { postSignin } from "../../api/Auth";
 
 function Login() {
+  // 로그인 API 연동
+  const [userid, setUserId] = useState(localStorage.getItem("id") || "");
+  const [password, setPassword] = useState(
+    localStorage.getItem("password") || ""
+  );
+  const [memory, setMemory] = useState(false);
+  useEffect(() => {
+    const storedId = localStorage.getItem("id");
+    const storedPassword = localStorage.getItem("password");
+    if (storedId) {
+      setUserId(storedId);
+    }
+    if (storedPassword) {
+      setPassword(storedPassword);
+    }
+  }, []);
+
+  const handleLoginBtn = async () => {
+    // if (memory) {
+    //   localStorage.setItem("id", userid);
+    //   localStorage.setItem("password", password);
+    // }
+    const login = {
+      userid: userid,
+      password: password,
+    };
+    try {
+      const response = await postSignin(login);
+      if (response.status === 200) {
+        localStorage.setItem("token", response.data);
+        window.location.href = "/";
+      } else if (response.code === 400) {
+        console.log(response.message);
+      }
+    } catch (error) {
+      console.log(error, "error");
+    }
+  };
   return (
     <Container>
       <TitleSpan>회원 로그인</TitleSpan>
-      <InputBox type="id" placeholder="아이디 입력" />
-      <InputBox type="password" placeholder="비밀번호 입력" />
-      <LoginBtn>로그인</LoginBtn>
+      <InputBox
+        type="id"
+        placeholder="아이디 입력"
+        value={userid}
+        onChange={(ev) => setUserId(ev.target.value)}
+      />
+      <InputBox
+        type="password"
+        placeholder="비밀번호 입력"
+        value={password}
+        onChange={(ev) => setPassword(ev.target.value)}
+      />
+      <LoginBtn onClick={() => handleLoginBtn()}>로그인</LoginBtn>
       <NavBox>
         <NavDiv>
           <NavSpan
@@ -22,7 +71,7 @@ function Login() {
         <NavDiv2>
           <NavSpan
             onClick={() => {
-              window.location.href = "/signup";
+              window.location.href = "/signup/terms";
             }}
           >
             회원가입
