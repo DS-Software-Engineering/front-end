@@ -15,7 +15,13 @@ function Terms() {
         <TermBox choice="필수" />
         <TermBox choice="선택" />
       </LineBox>
-      <RegisterBtn>가입하기</RegisterBtn>
+      <RegisterBtn
+        onClick={() => {
+          window.location.href = "/signup";
+        }}
+      >
+        다음
+      </RegisterBtn>
     </Container>
   );
 }
