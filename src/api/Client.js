@@ -25,16 +25,8 @@ const sendAuthorizedRequest = async ({ url, headers, method, data }) => {
   return response.json();
 };
 
-const createRequestMethod = (method) => async (requestConfig) => {
-  try {
-    const response = await sendAuthorizedRequest({ ...requestConfig, method });
-    // Handle the response as needed
-    console.log(response);
-  } catch (error) {
-    // Handle errors
-    console.error(error);
-  }
-};
+const createRequestMethod = (method) => async (requestConfig) =>
+  sendAuthorizedRequest({ ...requestConfig, method });
 
 export const request = {
   get: createRequestMethod("get"),
