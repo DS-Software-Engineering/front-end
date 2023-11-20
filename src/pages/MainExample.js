@@ -1,15 +1,46 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ExampleComponent from "../components/mainexample/ExampleComponent";
+import { getExample } from "../api/Example";
 
 const MainExample = () => {
+  // 주요처리 사례 API 연동
+  const [exampleList, setExampleList] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getExample("");
+        setExampleList(response.data);
+        console.log("주요 처리 사례 목록 가져오기 :", response);
+      } catch (error) {
+        console.error("주요 처리 사례 목록 가져오기 오류 :", error);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <Container>
       <Title>주요 처리 사례</Title>
+      <PostBtn
+        onClick={() => {
+          window.location.href = "/mainexample/post";
+        }}
+      >
+        글 작성
+      </PostBtn>
       <ListBox>
-        <ExampleComponent title="쓰레기통 추가설치" date="2023.00.00" />
-        <ExampleComponent title="쓰레기통 추가설치" date="2023.00.00" />
-        <ExampleComponent title="쓰레기통 추가설치" date="2023.00.00" />
+        {exampleList.map((request) => (
+          <ExampleComponent
+            id={request.id}
+            title={request.title}
+            context={request.context}
+            date={request.date}
+            image={request.image_url}
+            userNickname={request.userNickname}
+          />
+        ))}
       </ListBox>
     </Container>
   );
@@ -26,6 +57,7 @@ const Title = styled.div`
   font-weight: bold;
   text-align: center;
   margin: 50px 0;
+  margin-bottom: 20px;
 `;
 const ListBox = styled.div`
   width: 90%;
@@ -35,4 +67,18 @@ const ListBox = styled.div`
   grid-gap: 10vw;
   text-align: center;
   justify-content: center;
+`;
+const PostBtn = styled.div`
+  width: 80px;
+  height: 25px;
+  cursor: pointer;
+  background-color: #1d70b6;
+  text-align: center;
+  line-height: 25px;
+  border-radius: 10px;
+  color: #ffffff;
+  font-size: 14px;
+  margin-right: 20px;
+  float: right;
+  margin-bottom: 20px;
 `;
