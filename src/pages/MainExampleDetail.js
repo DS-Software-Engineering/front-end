@@ -1,30 +1,49 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { getExampleDetail } from "../api/Example";
+import { useParams } from "react-router-dom";
 
-const MainExampleDetail = () => {
+const MainExampleDetail = (props) => {
+  // 주요 처리 사례 상세 목록 API 연동
+  const [exampleDetailList, setExampleDetailList] = useState([]);
+  const params = useParams();
+
+  useEffect(() => {
+    const fetchData = async (id) => {
+      try {
+        const response = await getExampleDetail(params.id);
+        setExampleDetailList(response.data);
+        console.log("주요 처리 사례 상세목록 가져오기 :", response);
+      } catch (error) {
+        console.error("주요 처리 사례 상세목록 가져오기 오류 :", error);
+      }
+    };
+    fetchData();
+  }, []);
   return (
     <Container>
-      <TopBox>
-        <Name>[주요 처리 사례]</Name>
-        <Title>쓰레기통 추가 설치</Title>
-        <Date>2023.09.27</Date>
-      </TopBox>
-      <hr />
-      <BottomBox>
-        <Image></Image>
-        <Content>
-          신고가 많이 접수된 00동 00로 123-45번길 도로 앞에 쓰레기통을 추가로
-          설치하였습니다.
-        </Content>
-        <Author>성수동 주민센터</Author>
-        <ListButton
-          onClick={() => {
-            window.location.href = "/mainexample";
-          }}
-        >
-          목록
-        </ListButton>
-      </BottomBox>
+      <Name>[주요 처리 사례]</Name>
+      {exampleDetailList.map((request, id) => (
+        <>
+          <TopBox>
+            <Title>{request.title}</Title>
+            <Date>{request.date}</Date>
+          </TopBox>
+          <hr />
+          <BottomBox>
+            <Image>{request.image_url}</Image>
+            <Content>{request.context}</Content>
+            <Author>{request.userNickname}</Author>
+          </BottomBox>
+        </>
+      ))}
+      <ListButton
+        onClick={() => {
+          window.location.href = "/mainexample";
+        }}
+      >
+        목록
+      </ListButton>
     </Container>
   );
 };
@@ -37,14 +56,15 @@ const Container = styled.div`
 const TopBox = styled.div`
   width: 80%;
   margin: 0 auto;
-  margin-top: 50px;
+  margin-top: 0px;
 `;
 const BottomBox = styled.div`
   width: 80%;
   margin: 0 auto;
 `;
 const Name = styled.div`
-  margin-top: 10px;
+  margin-top: 50px;
+  margin-left: 30px;
   font-size: 15px;
   color: #c0c0c0;
 `;
@@ -84,4 +104,5 @@ const ListButton = styled.div`
   margin-top: 50px;
   float: right;
   cursor: pointer;
+  margin-right: 30px;
 `;

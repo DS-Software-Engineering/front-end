@@ -1,11 +1,20 @@
 import React from "react";
 import styled from "styled-components";
+import MainExampleDetail from "../../pages/MainExampleDetail";
 
 const ExampleComponent = (props) => {
   return (
     <Container
       onClick={() => {
-        window.location.href = "/mainexample/detail";
+        window.location.href = "/mainexample/detail/" + props.id;
+        <MainExampleDetail
+          id={props.id}
+          title={props.title}
+          context={props.context}
+          date={props.date}
+          image={props.image_url}
+          userNickname={props.userNickname}
+        />;
       }}
     >
       <Image>{props.image}</Image>
@@ -16,12 +25,18 @@ const ExampleComponent = (props) => {
 };
 export default ExampleComponent;
 
-const Container = styled.div``;
+const Container = styled.div`
+  width: 170px;
+  height: 250px;
+  text-align: center;
+  justify-content: center;
+`;
 const Image = styled.div`
   width: 150px;
   height: 150px;
   background-color: #999999;
   border-radius: 10px;
+  margin: 0 auto;
 `;
 const Title = styled.div`
   margin-top: 10px;

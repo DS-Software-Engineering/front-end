@@ -24,6 +24,7 @@ import ReportTrashHistory from "./components/pages/ReportTrashHistory";
 import ReportWaterwayHistory from "./components/pages/ReportWaterwayHistory";
 import Favorites from "./components/pages/Favorites";
 import FavList from "./components/pages/FavList";
+import MainExamplePost from "./pages/MainExamplePost";
 
 function App() {
   return (
@@ -35,9 +36,13 @@ function App() {
             <Route path="/" element={<MainPage />} />
             <Route path="/search" element={<SearchPage />} />
             <Route path="/explain" element={<RecycleExplain />} />
-            <Route path="/trashcan" element={<TrashCanList />} />
+            <Route path="/trashcan" element={<SearchPage />} />
             <Route path="/mainexample" element={<MainExample />} />
-            <Route path="/mainexample/detail" element={<MainExampleDetail />} />
+            <Route
+              path="/mainexample/detail/:id"
+              element={<MainExampleDetail />}
+            />
+            <Route path="/mainexample/post" element={<MainExamplePost />} />
             <Route path="/base" element={<Base />} />
             <Route path="/login" element={<Login />} />
             <Route path="/login/find_id" element={<FindID />} />
