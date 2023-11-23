@@ -3,6 +3,10 @@ import styled from "styled-components";
 const { kakao } = window;
 
 const ListComponent = (props) => {
+  const Client_id = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
+  const latitude = props.latitude;
+  const longtitude = props.longtitude;
+  const mapImageUrl = `https://maps.googleapis.com/maps/api/streetview?size=70x70&location=${latitude},${longtitude}&fov=80&heading=70&pitch=0&key=${Client_id}`;
   return (
     <>
       <Container>
@@ -14,6 +18,14 @@ const ListComponent = (props) => {
             id="roadview
           "
           >
+            <img
+              id="images"
+              alt="roadview"
+              src={mapImageUrl}
+              style={{
+                objectFit: props.image ? "cover" : "none",
+              }}
+            />
             {props.image}
           </Image>
         </TextBox>
