@@ -26,10 +26,40 @@ export const getExampleDetail = async (id) => {
     throw error;
   }
 };
+
+// formData
+/*
+export const checkSignUp = (e) => {
+  
+  const formData = new FormData();
+  formData.append("email", email);
+  formData.append("profileImg", imgRef.current.files[0]);
+
+  fetch("http://localhost:8080/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+    body: formData,
+  })
+    .then((response) => {
+      if (response.ok === true) {
+        return response.json();
+      }
+      throw new Error("에러 발생!");
+    })
+    .catch((error) => {
+      alert(error);
+    })
+    .then((data) => {
+      console.log(data);
+    });
+};
+*/
 export const postExamplePost = async (data) => {
   console.log("사례 작성 요청:", data);
   try {
-    const response = await request.get({
+    const response = await request.post({
       url: "/solveBoard/post",
       data,
     });

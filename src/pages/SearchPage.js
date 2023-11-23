@@ -210,6 +210,8 @@ const Search = () => {
             title={request.detail_location}
             category={request.shape}
             address={request.address}
+            latitude={request.latitude}
+            longtitude={request.longtitude}
           />
         ))}
       </ListBox>
