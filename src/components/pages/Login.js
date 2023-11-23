@@ -32,8 +32,8 @@ function Login() {
     try {
       const response = await postSignin(login);
       if (response.status === 200) {
-        localStorage.setItem("token", response.data);
-        window.location.href = "/";
+        localStorage.setItem("token", response.data[0].token);
+        //window.location.href = "/";
       } else if (response.code === 400) {
         console.log(response.message);
       }

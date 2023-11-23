@@ -4,6 +4,8 @@ import ExampleComponent from "../components/mainexample/ExampleComponent";
 import { getExample } from "../api/Example";
 
 const MainExample = () => {
+  const token = localStorage.getItem("token");
+
   // 주요처리 사례 API 연동
   const [exampleList, setExampleList] = useState([]);
 
@@ -23,13 +25,18 @@ const MainExample = () => {
   return (
     <Container>
       <Title>주요 처리 사례</Title>
-      <PostBtn
-        onClick={() => {
-          window.location.href = "/mainexample/post";
-        }}
-      >
-        글 작성
-      </PostBtn>
+      {token ? (
+        <PostBtn
+          onClick={() => {
+            window.location.href = "/mainexample/post";
+          }}
+        >
+          글 작성
+        </PostBtn>
+      ) : (
+        <></>
+      )}
+
       <ListBox>
         {exampleList.map((request) => (
           <ExampleComponent

@@ -1,38 +1,103 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import { postExamplePost } from "../api/Example";
+import axios from "axios";
 
 const MainExamplePost = () => {
-  // 주요처리 사례 글 작성 API 연동
-  const [examplePost, setExamplePost] = useState([]);
+  const [title, setTitle] = useState("");
+  const [file, setFile] = useState();
+  const [context, setContext] = useState("");
 
-  const handlePost = async () => {
-    try {
-      const response = await postExamplePost("");
-      setExamplePost(response.data);
-      console.log("주요 처리 사례 글작성하기 :", response);
-    } catch (error) {
-      console.error("주요 처리 사례 글 작성하기 오류 :", error);
+  //const commentDTO = { title: "title", content: "content" };
+
+  const handleTitle = (event) => {
+    setTitle(event.target.value);
+    console.log(title);
+  };
+  const handleContext = (event) => {
+    setContext(event.target.value);
+  };
+  const onChangeImg = (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+
+    if (e.target.files) {
+      const uploadFile = e.target.files[0];
+      formData.append("file", uploadFile);
+      setFile(uploadFile);
+      console.log(uploadFile);
+      console.log("===useState===");
+      console.log(file);
     }
+  };
+
+  const imgInput = useRef(null); // Ref 선언
+  const onClickPost = async (event) => {
+    event.preventDefault();
+    const token = localStorage.getItem("token");
+    const formData = new FormData();
+    formData.append("title", title);
+    //formData.append("images", file);
+    formData.append("images", imgInput.current.files[0]);
+    formData.append("context", context);
+
+    axios
+      .post("http://localhost:8080/solveBoard/post", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data", // Content-Type을 반드시 이렇게 하여야 한다.
+          Authorization: `Bearer ${token}`,
+        },
+        //data: commentDTO,
+      })
+      .then((result) => {
+        console.log("요청성공");
+        console.log(result);
+      })
+      .catch((error) => {
+        console.log("요청실패");
+        console.log(error);
+      });
   };
 
   return (
     <Container>
       <Title>주요 처리 사례 작성</Title>
-      <Box>
-        <SubTitleSpan>제목</SubTitleSpan>
-        <Input placeholder="제목" />
-      </Box>
-      <Box>
-        <SubTitleSpan>사진</SubTitleSpan>
-        <AttachFileBtn>파일 첨부</AttachFileBtn>
-        <Input placeholder="선택된 파일 없음" style={{ width: "140px" }} />
-      </Box>
-      <Box2>
-        <SubTitleSpan>내용</SubTitleSpan>
-        <ExplainTextBox placeholder="주요 처리 사례 내용을 적어주세요." />
-      </Box2>
-      <CompleteBtn onClick={handlePost}>작성 완료</CompleteBtn>
+      <form onSubmit={onClickPost}>
+        <Box>
+          <SubTitleSpan>제목</SubTitleSpan>
+          <Input value={title} onChange={handleTitle} placeholder="제목" />
+        </Box>
+        <Box>
+          <SubTitleSpan>사진</SubTitleSpan>
+          <form>
+            <input
+              type="file"
+              id="avatar"
+              name="avatar"
+              accept="image/*"
+              multiple={true}
+              onChange={onChangeImg}
+              ref={imgInput}
+            />
+          </form>
+        </Box>
+        <Box2>
+          <SubTitleSpan>내용</SubTitleSpan>
+          <ExplainTextBox
+            value={context}
+            onChange={handleContext}
+            placeholder="주요 처리 사례 내용을 적어주세요."
+          />
+        </Box2>
+        <CompleteBtn
+          type="submit"
+          onClick={() => {
+            window.location.href = "/mainexample";
+          }}
+        >
+          작성 완료
+        </CompleteBtn>
+      </form>
     </Container>
   );
 };
@@ -80,7 +145,6 @@ const Input = styled.input`
   border: 1px solid #929292;
   padding: 0px 15px;
 `;
-
 const AttachFileBtn = styled.button`
   width: 80px;
   height: 35px;
@@ -88,6 +152,11 @@ const AttachFileBtn = styled.button`
   border: none;
   background-color: #dceeff;
   margin-right: 10px;
+  &:hover {
+    background: #1d70b6;
+    color: white;
+    transition: 0.5s;
+  }
 `;
 
 const ExplainTextBox = styled.textarea`

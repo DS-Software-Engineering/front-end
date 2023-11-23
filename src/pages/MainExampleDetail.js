@@ -20,6 +20,10 @@ const MainExampleDetail = (props) => {
     };
     fetchData();
   }, []);
+
+  // 여러장 이미지 보여주기
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
   return (
     <Container>
       <Name>[주요 처리 사례]</Name>
@@ -31,7 +35,21 @@ const MainExampleDetail = (props) => {
           </TopBox>
           <hr />
           <BottomBox>
-            <Image>{request.image_url}</Image>
+            <Image>
+              <img
+                id="images"
+                src={request.image_url[currentImageIndex]}
+                alt={`mainexample images  ${currentImageIndex + 1}`}
+                style={{
+                  objectFit: request.image_url.length === 0 ? "none" : "cover",
+                }}
+                onClick={() => {
+                  setCurrentImageIndex(
+                    (prevIndex) => (prevIndex + 1) % request.image_url.length
+                  );
+                }}
+              />
+            </Image>
             <Content>{request.context}</Content>
             <Author>{request.userNickname}</Author>
           </BottomBox>
@@ -79,12 +97,21 @@ const Date = styled.div`
   margin-top: 15px;
 `;
 const Image = styled.div`
-  width: 280px;
-  height: 280px;
-  background-color: #999999;
-  border-radius: 10px;
-  margin: 30px auto;
-  margin-bottom: 50px;
+  // width: 280px;
+  // height: 280px;
+  // background-color: #999999;
+  // border-radius: 10px;
+  // margin: 30px auto;
+  // margin-bottom: 50px;
+  #images {
+    width: 280px;
+    height: 280px;
+    background-color: #999999;
+    border-radius: 10px;
+    margin: 30px auto;
+    margin-bottom: 50px;
+    //object-fit: cover;
+  }
 `;
 const Content = styled.div``;
 const Author = styled.div`

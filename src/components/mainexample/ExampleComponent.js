@@ -17,7 +17,16 @@ const ExampleComponent = (props) => {
         />;
       }}
     >
-      <Image>{props.image}</Image>
+      <Image>
+        <img
+          id="images"
+          src={props.image}
+          alt="mainexample images"
+          style={{
+            objectFit: props.image ? "cover" : "none",
+          }}
+        />
+      </Image>
       <Title>{props.title}</Title>
       <Date>{props.date}</Date>
     </Container>
@@ -32,11 +41,19 @@ const Container = styled.div`
   justify-content: center;
 `;
 const Image = styled.div`
-  width: 150px;
-  height: 150px;
-  background-color: #999999;
-  border-radius: 10px;
-  margin: 0 auto;
+  // width: 150px;
+  // height: 150px;
+  // background-color: #999999;
+  // border-radius: 10px;
+  // margin: 0 auto;
+  #images {
+    width: 150px;
+    height: 150px;
+    background-color: #999999;
+    border-radius: 10px;
+    margin: 0 auto;
+    //object-fit: cover;
+  }
 `;
 const Title = styled.div`
   margin-top: 10px;
