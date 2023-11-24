@@ -7,7 +7,7 @@ function MyPage() {
   return (
     <Container>
       <IoPersonCircleSharp id="profile-icon" />
-      <h2>XXX 님</h2>
+      <h2>홍길동 님</h2>
       <MenuBox
         onClick={() => {
           window.location.href = "/mypage/report/trash";
