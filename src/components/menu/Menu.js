@@ -73,7 +73,7 @@ function Menu({ onClose }) {
               window.location.href = "/report";
             }}
           >
-            <MenuCard menuName="신고 및 건의하기" />
+            <MenuCard menuName="신고하기" />
           </span>
           <span
             onClick={() => {
