@@ -13,9 +13,13 @@ function Reward() {
       <TitleSpan>리워드 적립 내역</TitleSpan>
 
       <ListBox>
-        <ListComponent title="장소명1" category="음료 컵" address="상세주소" />
-        <ListComponent title="장소명2" category="음료 컵" address="상세주소" />
-        <ListComponent title="장소명3" category="음료 컵" address="상세주소" />
+        <ListComponent
+          title="왕십리역 6번 출구"
+          category="음료 컵"
+          address=""
+          latitude="37.563355"
+          longtitude="127.0358351"
+        />
       </ListBox>
     </Container>
   );
