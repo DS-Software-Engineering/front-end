@@ -1,23 +1,56 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { TfiClose } from "react-icons/tfi";
 import { BsChevronRight } from "react-icons/bs";
 //import MenuCard from "./MenuCard";
+import { getMyInfo } from "../../api/Mypage";
 
 function Profile() {
+  const token = localStorage.getItem("token");
+  const [name, setName] = useState("");
+  const [reward, setReward] = useState("0");
+
+  useEffect(() => {
+    const myInfo = async (keyword) => {
+      try {
+        const response = await getMyInfo();
+        if (response.status === 200) {
+          console.log("나의 정보 가져오기 :", response);
+          setName(response.data[0].nickname);
+          setReward(response.data[0].reward);
+        } else if (response.code === 400) {
+          console.log(response.data.message);
+        }
+      } catch (error) {
+        console.error("나의 정보 가져오기 :", error);
+      }
+    };
+    myInfo();
+  }, []);
+
   return (
     <ProfileBox>
-      <InnerBox
-        onClick={() => {
-          window.location.href = "/login";
-        }}
-      >
-        <ProfileText>로그인 후 이용하세요</ProfileText>
-        <RewardBox>
-          <Reward>R</Reward>
-          <ProfileText>0</ProfileText>
-        </RewardBox>
-      </InnerBox>
+      {!token ? (
+        <InnerBox
+          onClick={() => {
+            window.location.href = "/login";
+          }}
+        >
+          <ProfileText>로그인 후 이용하세요</ProfileText>
+        </InnerBox>
+      ) : (
+        <InnerBox
+          onClick={() => {
+            window.location.href = "/mypage";
+          }}
+        >
+          <ProfileText>{name}님</ProfileText>
+          <RewardBox>
+            <Reward>R</Reward>
+            <ProfileText>{reward}</ProfileText>
+          </RewardBox>
+        </InnerBox>
+      )}
     </ProfileBox>
   );
 }
@@ -32,8 +65,15 @@ function MenuCard({ menuName }) {
 }
 
 function Menu({ onClose }) {
+  const token = localStorage.getItem("token");
+
   const handleClose = () => {
     onClose?.();
+  };
+  const handleLogout = () => {
+    onClose();
+    localStorage.removeItem("token");
+    window.location.href = "/";
   };
 
   return (
@@ -90,13 +130,17 @@ function Menu({ onClose }) {
             <MenuCard menuName="마이페이지" />
           </span>
         </MenuBox>
-        <LogInBox
-          onClick={() => {
-            window.location.href = "/login";
-          }}
-        >
-          로그인
-        </LogInBox>
+        {!token ? (
+          <LogInBox
+            onClick={() => {
+              window.location.href = "/login";
+            }}
+          >
+            로그인
+          </LogInBox>
+        ) : (
+          <LogInBox onClick={() => handleLogout()}>로그아웃</LogInBox>
+        )}
       </Container>
     </>
   );
