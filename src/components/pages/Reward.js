@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import ListComponent from "../main/ListComponent";
+import RewardListComponent from "../reward/RewardListComponent";
 
 function Reward() {
   return (
@@ -13,12 +13,29 @@ function Reward() {
       <TitleSpan>리워드 적립 내역</TitleSpan>
 
       <ListBox>
-        <ListComponent
-          title="왕십리역 6번 출구"
-          category="음료 컵"
-          address=""
-          latitude="37.563355"
-          longtitude="127.0358351"
+        <RewardListComponent
+          title="장소명1"
+          date="2023.09.25"
+          reward="+50 적립"
+          address="상세주소"
+        />
+        <RewardListComponent
+          title="장소명2"
+          date="2023.09.25"
+          reward="+50 적립"
+          address="상세주소"
+        />
+        <RewardListComponent
+          title="장소명3"
+          date="2023.09.25"
+          reward="+50 적립"
+          address="상세주소"
+        />
+        <RewardListComponent
+          title="장소명3"
+          date="2023.09.25"
+          reward="+50 적립"
+          address="상세주소"
         />
       </ListBox>
     </Container>
