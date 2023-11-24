@@ -26,12 +26,6 @@ function FindID() {
             type="text"
             placeholder="가입할 때 입력한 번호를 입력해주세요."
           />
-          <CheckBtn>인증 번호 발송</CheckBtn>
-        </InputBox>
-        <SubTitle>휴대폰 본인 인증*</SubTitle>
-        <InputBox>
-          <Input type="text" placeholder="인증번호 6자리를 입력해주세요." />
-          <CheckBtn>확인</CheckBtn>
         </InputBox>
       </InnerBox>
       <FindIDBtn>ID 찾기</FindIDBtn>
@@ -57,7 +51,7 @@ const Container = styled.div`
 
 const InnerBox = styled.div`
   width: 350px;
-  height: 160px;
+  height: 70px;
 `;
 
 const FindIDBtn = styled.button`
@@ -115,23 +109,12 @@ const SubTitle = styled.span`
 `;
 
 const Input = styled.input`
-  width: 220px;
+  width: 358px;
   height: 30px;
   border: none;
   border-bottom: 1px solid gray;
   font-size: small;
   margin-bottom: 15px;
-`;
-
-const CheckBtn = styled.button`
-  width: 115px;
-  height: 30px;
-  border-radius: 10px;
-  border: none;
-  background-color: #dddddd;
-  color: white;
-  font-weight: 700;
-  font-size: medium;
 `;
 
 const InputBox = styled.div`

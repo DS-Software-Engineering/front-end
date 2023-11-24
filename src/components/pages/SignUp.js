@@ -69,13 +69,12 @@ function SignUp() {
       </InputBox>
       <SubTitle>휴대폰 번호*</SubTitle>
       <InputBox>
-        <Input
+        <Input2
           type="text"
           placeholder="휴대폰 번호를 입력해주세요."
           value={phonenum}
           onChange={(e) => setPhonenum(e.target.value)}
         />
-        <CheckBtn>인증 번호 발송</CheckBtn>
       </InputBox>
       <NextBtn onClick={handleButton}>가입하기</NextBtn>
     </Container>
