@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { IoLocationSharp } from "react-icons/io5";
+import { getFavList } from "../../api/Map";
 const { kakao } = window;
 
 function Favorites() {
