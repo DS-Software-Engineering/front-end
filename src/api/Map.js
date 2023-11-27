@@ -65,3 +65,17 @@ export const getMapRecycle = async () => {
     throw error;
   }
 };
+
+export const getFavList = async () => {
+  try {
+    const res = await request.get({
+      url: "/myPage/favoriteBin",
+      params: {},
+    });
+    console.log("내 정보 요청 완료", res);
+    return res;
+  } catch (error) {
+    console.error("내 정보 요청 오류:", error);
+    throw error;
+  }
+};

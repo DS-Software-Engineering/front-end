@@ -1,13 +1,33 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { IoPersonCircleSharp } from "react-icons/io5";
 import { AiFillAlert, AiFillStar } from "react-icons/ai";
+import { getMyInfo } from "../../api/Mypage";
 
 function MyPage() {
+  const [name, setName] = useState("");
+
+  useEffect(() => {
+    const myInfo = async (keyword) => {
+      try {
+        const response = await getMyInfo();
+        if (response.status === 200) {
+          console.log("나의 정보 가져오기 :", response);
+          setName(response.data[0].nickname);
+        } else if (response.code === 400) {
+          console.log(response.data.message);
+        }
+      } catch (error) {
+        console.error("나의 정보 가져오기 :", error);
+      }
+    };
+    myInfo();
+  }, []);
+
   return (
     <Container>
       <IoPersonCircleSharp id="profile-icon" />
-      <h2>홍길동 님</h2>
+      <h2>{name} 님</h2>
       <MenuBox
         onClick={() => {
           window.location.href = "/mypage/report/trash";

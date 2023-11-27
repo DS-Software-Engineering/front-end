@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { postSignup } from "../../api/Auth";
+import { postSignup, getNickname, getID } from "../../api/Auth";
 
 function SignUp() {
   const [userid, setUserId] = useState("");
@@ -26,6 +26,28 @@ function SignUp() {
     }
   };
 
+  const handleCheckID = async () => {
+    try {
+      const response = await getID(userid);
+      if (response) {
+        console.log("아이디 중복 확인 성공");
+      } else {
+        console.log("아이디 중복 확인 실패");
+      }
+    } catch (error) {
+      console.error("아이디 중복 확인 오류:", error);
+    }
+  };
+
+  const handleCheckNickname = async () => {
+    try {
+      const response = await getNickname(nickname);
+      console.log("닉네임 중복 확인 결과:", response);
+    } catch (error) {
+      console.error("닉네임 중복 확인 오류:", error);
+    }
+  };
+
   return (
     <Container>
       <TitleSpan>회원 가입</TitleSpan>
@@ -37,7 +59,7 @@ function SignUp() {
           value={userid}
           onChange={(e) => setUserId(e.target.value)}
         />
-        <CheckBtn>중복 확인</CheckBtn>
+        <CheckBtn onClick={handleCheckID}>중복 확인</CheckBtn>
       </InputBox>
       <SubTitle>비밀번호*</SubTitle>
       <InputBox>
@@ -65,7 +87,7 @@ function SignUp() {
           value={nickname}
           onChange={(e) => setNickname(e.target.value)}
         />
-        <CheckBtn>중복 확인</CheckBtn>
+        <CheckBtn onClick={handleCheckNickname}>중복 확인</CheckBtn>
       </InputBox>
       <SubTitle>휴대폰 번호*</SubTitle>
       <InputBox>

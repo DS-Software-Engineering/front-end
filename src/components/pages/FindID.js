@@ -1,7 +1,50 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { postFindId } from "../../api/Auth";
+
+function Modal({ onClose }) {
+  return (
+    <>
+      <ModalBackground></ModalBackground>
+      <ModalContainer
+        onClick={(e) => {
+          if (e.target === ModalBackground.current) {
+            onClose();
+          }
+        }}
+      >
+        <h3>일치하는 회원정보가 없습니다.</h3>
+        <ModalBtn
+          onClick={() => {
+            onClose();
+          }}
+        >
+          확인
+        </ModalBtn>
+      </ModalContainer>
+    </>
+  );
+}
 
 function FindID() {
+  const [phonenum, setPhonenum] = useState("");
+  const [foundId, setFoundId] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const checkID = async () => {
+    const data = {
+      phonenum: phonenum,
+    };
+    try {
+      const response = await postFindId(data);
+      console.log("성공");
+      setFoundId(response.data[0]);
+    } catch (error) {
+      console.error("오류");
+      setModalOpen(true);
+    }
+  };
+
   return (
     <Container>
       <NavBox>
@@ -25,21 +68,22 @@ function FindID() {
           <Input
             type="text"
             placeholder="가입할 때 입력한 번호를 입력해주세요."
+            value={phonenum}
+            onChange={(e) => setPhonenum(e.target.value)}
           />
         </InputBox>
       </InnerBox>
-      <FindIDBtn>ID 찾기</FindIDBtn>
-      <NoticeID />
+      <FindIDBtn onClick={checkID}>ID 찾기</FindIDBtn>
+      <NoticeIDBox>
+        {foundId && (
+          <>
+            <h4>회원님의 아이디는 {foundId} 입니다.</h4>
+            <GotoLoginBtn>로그인 하러 가기</GotoLoginBtn>
+          </>
+        )}
+      </NoticeIDBox>
+      {modalOpen && <Modal onClose={() => setModalOpen(false)} />}
     </Container>
-  );
-}
-
-function NoticeID() {
-  return (
-    <NoticeIDBox>
-      <h4>회원님의 아이디는 ******* 입니다.</h4>
-      <GotoLoginBtn>로그인 하러 가기</GotoLoginBtn>
-    </NoticeIDBox>
   );
 }
 
@@ -126,7 +170,7 @@ const InputBox = styled.div`
 const NoticeIDBox = styled.div`
   width: 350px;
   margin-top: 25px;
-  border: 1px solid #383838;
+  /* border: 1px solid #383838; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -141,6 +185,40 @@ const GotoLoginBtn = styled.button`
   font-size: small;
   text-decoration: underline;
   margin-bottom: 20px;
+`;
+
+const ModalContainer = styled.div`
+  width: 280px;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  z-index: 1001;
+  border-radius: 20px;
+  background-color: white;
+  position: absolute;
+  top: 320px;
+  left: 55px;
+`;
+
+const ModalBtn = styled.button`
+  width: 230px;
+  height: 35px;
+  border: none;
+  border-radius: 15px;
+  background-color: #dceeff;
+`;
+
+const ModalBackground = styled.div`
+  width: 390px;
+  height: 100vh;
+  z-index: 1000;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  background-color: black;
+  opacity: 65%;
 `;
 
 export default FindID;

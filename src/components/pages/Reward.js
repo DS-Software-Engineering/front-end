@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import RewardListComponent from "../reward/RewardListComponent";
+import { getReward } from "../../api/Mypage";
 
 function Reward() {
   return (

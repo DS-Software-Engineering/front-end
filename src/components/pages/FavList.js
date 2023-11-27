@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import ListComponent from "../main/ListComponent";
+import { getFavList } from "../../api/Map";
 
 function FavList() {
   return (

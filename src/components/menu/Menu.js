@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { TfiClose } from "react-icons/tfi";
 import { BsChevronRight } from "react-icons/bs";
@@ -55,6 +55,31 @@ function Profile() {
   );
 }
 
+function Modal({ onClose }) {
+  return (
+    <>
+      <ModalBackground></ModalBackground>
+      <ModalContainer
+        onClick={(e) => {
+          if (e.target === ModalBackground.current) {
+            onClose();
+          }
+        }}
+      >
+        <h3>로그인 후 이용하세요</h3>
+        <ModalBtn
+          onClick={() => {
+            onClose();
+            window.location.href = "/login";
+          }}
+        >
+          확인
+        </ModalBtn>
+      </ModalContainer>
+    </>
+  );
+}
+
 function MenuCard({ menuName }) {
   return (
     <MenuInnerBox>
@@ -74,6 +99,17 @@ function Menu({ onClose }) {
     onClose();
     localStorage.removeItem("token");
     window.location.href = "/";
+  };
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const modalBackground = useRef();
+
+  const handleClickMyPage = () => {
+    if (!token) {
+      setModalOpen(true);
+    } else {
+      window.location.href = "/mypage";
+    }
   };
 
   return (
@@ -122,14 +158,11 @@ function Menu({ onClose }) {
           >
             <MenuCard menuName="주요 처리 사례" />
           </span>
-          <span
-            onClick={() => {
-              window.location.href = "/mypage";
-            }}
-          >
+          <span onClick={handleClickMyPage}>
             <MenuCard menuName="마이페이지" />
           </span>
         </MenuBox>
+        {modalOpen && <Modal onClose={() => setModalOpen(false)} />}
         {!token ? (
           <LogInBox
             onClick={() => {
@@ -259,6 +292,40 @@ const LogInBox = styled.div`
   position: fixed;
   bottom: 10px;
   cursor: pointer;
+`;
+
+const ModalContainer = styled.div`
+  width: 280px;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  z-index: 1001;
+  border-radius: 20px;
+  background-color: white;
+  position: absolute;
+  top: 320px;
+  left: 55px;
+`;
+
+const ModalBtn = styled.button`
+  width: 230px;
+  height: 35px;
+  border: none;
+  border-radius: 15px;
+  background-color: #dceeff;
+`;
+
+const ModalBackground = styled.div`
+  width: 390px;
+  height: 100vh;
+  z-index: 1000;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  background-color: black;
+  opacity: 65%;
 `;
 
 export default Menu;
