@@ -37,10 +37,10 @@ function FindID() {
     };
     try {
       const response = await postFindId(data);
-      console.log("성공");
+      console.log("아이디 찾기 성공", response);
       setFoundId(response.data[0]);
     } catch (error) {
-      console.error("오류");
+      console.error("아이디 찾기 실패", error);
       setModalOpen(true);
     }
   };

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { postFindPW, patchChangePW } from "../../api/Auth";
+import axios from "axios";
 
 function Modal({ onClose }) {
   return (
@@ -65,10 +66,20 @@ function FindPW() {
       phonenum: phonenum,
       password: password,
     };
-
+    /*
     try {
       const response = await patchChangePW(data);
-      console.log("비밀번호 수정 성공");
+      console.log("비밀번호 수정 성공", response);
+    } catch (error) {
+      console.error("비밀번호 수정 오류:", error);
+    }
+*/
+    try {
+      const response = await axios.patch(
+        "http://localhost:8080/auth/changePassword",
+        data
+      );
+      console.log("비밀번호 수정 성공", response.data);
     } catch (error) {
       console.error("비밀번호 수정 오류:", error);
     }

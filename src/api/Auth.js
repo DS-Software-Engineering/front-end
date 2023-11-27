@@ -74,7 +74,7 @@ export const patchChangePW = async (data) => {
 export const getNickname = async (nickname) => {
   try {
     const res = await request.get({
-      url: "/auth/checkNickname?nickname=nick10" + nickname,
+      url: "/auth/checkNickname?nickname=" + nickname,
       params: {},
     });
     console.log("닉네임 중복 확인 요청 완료", res);
