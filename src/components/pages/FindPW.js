@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { postFindPW, patchChangePW } from "../../api/Auth";
 import axios from "axios";
 
-function Modal({ onClose }) {
+function Modal({ onClose, message }) {
   return (
     <>
       <ModalBackground></ModalBackground>
@@ -14,7 +14,7 @@ function Modal({ onClose }) {
           }
         }}
       >
-        <h3>일치하는 회원정보가 없습니다.</h3>
+        <h3>{message}</h3>
         <ModalBtn
           onClick={() => {
             onClose();
@@ -32,6 +32,8 @@ function FindPW() {
   const [phonenum, setPhonenum] = useState("");
   const [showNewPW, setShowNewPW] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [modalOpen2, setModalOpen2] = useState(false);
+  const [modalOpen3, setModalOpen3] = useState(false);
 
   const checkPW = async () => {
     const data = {
@@ -58,6 +60,7 @@ function FindPW() {
   const handleChangePassword = async () => {
     if (password !== confirmPassword) {
       console.error("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+      setModalOpen3(true);
       return;
     }
 
@@ -67,13 +70,6 @@ function FindPW() {
       password: password,
     };
     /*
-    try {
-      const response = await patchChangePW(data);
-      console.log("비밀번호 수정 성공", response);
-    } catch (error) {
-      console.error("비밀번호 수정 오류:", error);
-    }
-*/
     try {
       const response = await axios.patch(
         "http://localhost:8080/auth/changePassword",
@@ -156,7 +152,24 @@ function FindPW() {
           </>
         )}
       </SetNewPWBox>
-      {modalOpen && <Modal onClose={() => setModalOpen(false)} />}
+      {modalOpen && (
+        <Modal
+          onClose={() => setModalOpen(false)}
+          message="일치하는 회원정보가 없습니다."
+        />
+      )}
+      {modalOpen2 && (
+        <Modal
+          onClose={() => setModalOpen2(false)}
+          message="비밀번호가 수정되었습니다."
+        />
+      )}
+      {modalOpen3 && (
+        <Modal
+          onClose={() => setModalOpen3(false)}
+          message="비밀번호가 일치하지 않습니다."
+        />
+      )}
     </Container>
   );
 }
