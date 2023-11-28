@@ -69,14 +69,13 @@ function FindPW() {
       phonenum: phonenum,
       password: password,
     };
-
+    /*
     try {
       const response = await axios.patch(
         "http://localhost:8080/auth/changePassword",
         data
       );
       console.log("비밀번호 수정 성공", response.data);
-      setModalOpen2(true);
     } catch (error) {
       console.error("비밀번호 수정 오류:", error);
     }
