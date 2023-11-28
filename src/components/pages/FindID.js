@@ -42,6 +42,7 @@ function FindID() {
     } catch (error) {
       console.error("아이디 찾기 실패", error);
       setModalOpen(true);
+      setFoundId(false);
     }
   };
 

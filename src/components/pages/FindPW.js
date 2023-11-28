@@ -69,7 +69,7 @@ function FindPW() {
       phonenum: phonenum,
       password: password,
     };
-    /*
+
     try {
       const response = await axios.patch(
         "http://localhost:8080/auth/changePassword",
