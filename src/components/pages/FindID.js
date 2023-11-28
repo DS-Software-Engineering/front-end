@@ -78,7 +78,13 @@ function FindID() {
         {foundId && (
           <>
             <h4>회원님의 아이디는 {foundId} 입니다.</h4>
-            <GotoLoginBtn>로그인 하러 가기</GotoLoginBtn>
+            <GotoLoginBtn
+              onClick={() => {
+                window.location.href = "/login";
+              }}
+            >
+              로그인 하러 가기
+            </GotoLoginBtn>
           </>
         )}
       </NoticeIDBox>
