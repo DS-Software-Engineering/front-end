@@ -2,6 +2,30 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { postSignin } from "../../api/Auth";
 
+function Modal({ onClose }) {
+  return (
+    <>
+      <ModalBackground></ModalBackground>
+      <ModalContainer
+        onClick={(e) => {
+          if (e.target === ModalBackground.current) {
+            onClose();
+          }
+        }}
+      >
+        <ModalText>아이디나 비밀번호를 잘못 입력하셨습니다.</ModalText>
+        <ModalBtn
+          onClick={() => {
+            onClose();
+          }}
+        >
+          확인
+        </ModalBtn>
+      </ModalContainer>
+    </>
+  );
+}
+
 function Login() {
   // 로그인 API 연동
   const [userid, setUserId] = useState(localStorage.getItem("id") || "");
@@ -9,6 +33,7 @@ function Login() {
     localStorage.getItem("password") || ""
   );
   const [memory, setMemory] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   useEffect(() => {
     const storedId = localStorage.getItem("id");
     const storedPassword = localStorage.getItem("password");
@@ -34,8 +59,9 @@ function Login() {
       if (response.status === 200) {
         localStorage.setItem("token", response.data[0].token);
         window.location.href = "/";
-      } else if (response.code === 400) {
+      } else if (response.status === 400) {
         console.log(response.message);
+        setModalOpen(true);
       }
     } catch (error) {
       console.log(error, "error");
@@ -78,6 +104,7 @@ function Login() {
           </NavSpan>
         </NavDiv2>
       </NavBox>
+      {modalOpen && <Modal onClose={() => setModalOpen(false)} />}
     </Container>
   );
 }
@@ -155,6 +182,45 @@ const NavDivider = styled.div`
   height: 35px;
   background-color: black;
   margin: 0 35px;
+`;
+
+const ModalContainer = styled.div`
+  width: 300px;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  z-index: 1001;
+  border-radius: 20px;
+  background-color: white;
+  position: absolute;
+  top: 320px;
+  left: 55px;
+`;
+
+const ModalBtn = styled.button`
+  width: 230px;
+  height: 35px;
+  border: none;
+  border-radius: 15px;
+  background-color: #dceeff;
+`;
+
+const ModalBackground = styled.div`
+  width: 390px;
+  height: 100vh;
+  z-index: 1000;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  background-color: black;
+  opacity: 65%;
+`;
+
+const ModalText = styled.span`
+  font-size: medium;
+  font-weight: 700;
 `;
 
 export default Login;
