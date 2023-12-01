@@ -1,9 +1,35 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import ListComponent from "../main/ListComponent";
+import ReportListComponent from "../mypage/ReportListComponent";
 import { getDeclaration, getDeclarationDetail } from "../../api/Mypage";
 
 function ReportWaterwayHistory() {
+  const [reportType, setReportType] = useState("2");
+  const [reportList, setReportList] = useState([]);
+
+  useEffect(() => {
+    fetchReportData("2");
+  }, []);
+
+  const fetchReportData = async (type) => {
+    try {
+      const response = await getDeclaration(type);
+      setReportList(response.data[0]);
+    } catch (error) {
+      console.error("신고 내역 정보 요청 오류:", error);
+    }
+  };
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toISOString().split("T")[0]; // Extracting YYYY-MM-DD
+  };
+
+  const handleTabClick = (type) => {
+    setReportType(type);
+    fetchReportData(type);
+  };
+
   return (
     <Container>
       <TitleSpan>신고 내역</TitleSpan>
@@ -15,14 +41,20 @@ function ReportWaterwayHistory() {
         >
           무단투기
         </TapBtn>
-        <SelectedTapBtn>배수구</SelectedTapBtn>
+        <SelectedTapBtn onClick={() => handleTabClick("2")}>
+          배수구
+        </SelectedTapBtn>
       </TapBox>
       <ListBox>
-        <ListComponent title="장소명1" category="음료 컵" address="상세주소" />
-        <ListComponent title="장소명2" category="음료 컵" address="상세주소" />
-        <ListComponent title="장소명3" category="음료 컵" address="상세주소" />
-        <ListComponent title="장소명4" category="음료 컵" address="상세주소" />
-        <ListComponent title="장소명5" category="음료 컵" address="상세주소" />
+        {reportList.map((report) => (
+          <ReportListComponent
+            key={report.id}
+            title={report.address}
+            date={formatDate(report.date)}
+            address={report.detail_location}
+            image={report.image_url}
+          />
+        ))}
       </ListBox>
     </Container>
   );

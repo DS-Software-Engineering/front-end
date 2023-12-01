@@ -1,14 +1,50 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import ListComponent from "../main/ListComponent";
+import ReportListComponent from "../mypage/ReportListComponent";
+import ReportModal from "../mypage/ReportModal";
 import { getDeclaration, getDeclarationDetail } from "../../api/Mypage";
 
 function ReportTrashHistory() {
+  const [reportType, setReportType] = useState("1");
+  const [reportList, setReportList] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedReport, setSelectedReport] = useState(null);
+
+  useEffect(() => {
+    fetchReportData("1");
+  }, []);
+
+  const fetchReportData = async (type) => {
+    try {
+      const response = await getDeclaration(type);
+      setReportList(response.data[0]);
+    } catch (error) {
+      console.error("신고 내역 정보 요청 오류:", error);
+    }
+  };
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toISOString().split("T")[0]; // Extracting YYYY-MM-DD
+  };
+
+  const handleTabClick = (type) => {
+    setReportType(type);
+    fetchReportData(type);
+  };
+
+  const handleReportClick = (report) => {
+    setSelectedReport(report); // 선택된 신고 정보 저장
+    setModalOpen(true);
+  };
+
   return (
     <Container>
       <TitleSpan>신고 내역</TitleSpan>
       <TapBox>
-        <SelectedTapBtn>무단투기</SelectedTapBtn>
+        <SelectedTapBtn onClick={() => handleTabClick("1")}>
+          무단투기
+        </SelectedTapBtn>
         <TapBtn
           onClick={() => {
             window.location.href = "/mypage/report/waterway";
@@ -18,12 +54,27 @@ function ReportTrashHistory() {
         </TapBtn>
       </TapBox>
       <ListBox>
-        <ListComponent title="장소명1" category="음료 컵" address="상세주소" />
-        <ListComponent title="장소명2" category="음료 컵" address="상세주소" />
-        <ListComponent title="장소명3" category="음료 컵" address="상세주소" />
-        <ListComponent title="장소명4" category="음료 컵" address="상세주소" />
-        <ListComponent title="장소명5" category="음료 컵" address="상세주소" />
+        {reportList.map((report) => (
+          <ReportListComponent
+            key={report.id}
+            title={report.address}
+            date={formatDate(report.date)}
+            address={report.detail_location}
+            image={report.image_url}
+            onClick={() => handleReportClick(report)}
+          />
+        ))}
       </ListBox>
+      {modalOpen && selectedReport && (
+        <ReportModal
+          onClose={() => setModalOpen(false)}
+          title={selectedReport.address}
+          date={formatDate(selectedReport.date)}
+          address={selectedReport.detail_location}
+          image={selectedReport.image_url}
+          context={selectedReport.context}
+        />
+      )}
     </Container>
   );
 }
