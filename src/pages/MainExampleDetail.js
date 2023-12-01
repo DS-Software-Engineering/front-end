@@ -110,6 +110,7 @@ const Image = styled.div`
     border-radius: 10px;
     margin: 30px auto;
     margin-bottom: 50px;
+    margin-left: 20px;
     //object-fit: cover;
   }
 `;

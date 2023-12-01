@@ -30,6 +30,7 @@ import drinkImg from "../assets/img/drinkImg.png";
 import cbImg from "../assets/img/cbImg.png";
 import recycleImg from "../assets/img/recycleImg.png";
 import blankImg from "../assets/img/blank.png";
+import StarListComponent from "../components/main/StarListComponents";
 const { kakao } = window;
 
 const Main = () => {
@@ -231,6 +232,28 @@ const Main = () => {
 
     //markerMap();
 
+    var myPosition = new kakao.maps.LatLng( // 기본위치(성동구청)
+      37.5634371209034,
+      127.036915431973047
+    );
+    var myimageSize = new kakao.maps.Size(24, 35);
+    // 마커 이미지를 생성
+    var myimageSrc =
+      "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+    var mymarkerImage = new kakao.maps.MarkerImage(myimageSrc, myimageSize);
+
+    // 마커를 생성합니다
+    var myMarker = new kakao.maps.Marker({
+      map: map,
+      position: myPosition,
+      image: mymarkerImage, // 마커 이미지
+    });
+    // 마커가 지도 위에 표시되도록 설정합니다
+    myMarker.setMap(map);
+
+    // 아래 코드는 지도 위의 마커를 제거하는 코드입니다
+    // marker.setMap(null);
+
     // latlng를 기반으로 positions 배열 생성
     var positions = latlng.map((request) => ({
       latlng: new kakao.maps.LatLng(request.latitude, request.longtitude),
@@ -318,13 +341,17 @@ const Main = () => {
           <BottomSheetContent ref={content}>
             <ListBox>
               {searchList.map((request, index) => (
-                <ListComponent
+                <StarListComponent
                   id={request.id}
                   title={request.detail_location}
                   category={request.shape}
                   address={request.address}
                   latitude={request.latitude}
                   longtitude={request.longtitude}
+                  type_cb={request.type_cb}
+                  type_drink={request.type_drink}
+                  type_general={request.type_general}
+                  type_recycle={request.type_recycle}
                   //onClick={handleMove(request.latitude, request.latitude)}
                 />
               ))}
