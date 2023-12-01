@@ -4,7 +4,7 @@ import styled from "styled-components";
 const ReportListComponent = (props) => {
   return (
     <>
-      <Container>
+      <Container onClick={props.onClick}>
         <TextBox>
           <BigText>{props.title}</BigText>
           <SmallText>{props.date}</SmallText>

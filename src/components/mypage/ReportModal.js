@@ -1,14 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { IoClose } from "react-icons/io5";
 import { getDeclarationDetail } from "../../api/Mypage";
 
 const ReportModal = (props) => {
+  const [reportDetail, setReportDetail] = useState(null);
+
   useEffect(() => {
     if (props.id) {
       getDeclarationDetail(props.id)
         .then((response) => {
           console.log("상세 정보 불러오기 성공:", response);
+          setReportDetail(response.data[0]);
         })
         .catch((error) => {
           console.error("상세 정보 불러오기 실패:", error);
@@ -19,7 +22,7 @@ const ReportModal = (props) => {
     <>
       <ModalBackground></ModalBackground>
       <ModalContainer>
-        <IoClose id="close-icon" />
+        <IoClose id="close-icon" onClick={props.onClose} />
         <Image>
           <img
             id="images"
@@ -44,7 +47,7 @@ const ReportModal = (props) => {
         <Line></Line>
         <ModalSection>
           <ModalText>신고 내용 :</ModalText>
-          <ModalContext>{props.context}</ModalContext>
+          <ModalContext>{reportDetail?.context}</ModalContext>
         </ModalSection>
       </ModalContainer>
     </>

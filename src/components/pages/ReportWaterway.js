@@ -9,12 +9,50 @@ const geolocationOptions = {
   maximumAge: 1000 * 3600 * 24,
 };
 
+function Modal() {
+  return (
+    <>
+      <ModalBackground></ModalBackground>
+      <ModalContainer>
+        <ModalText>신고가 완료되었습니다.</ModalText>
+        <ModalBtn
+          onClick={() => {
+            window.location.href = "/report";
+          }}
+        >
+          확인
+        </ModalBtn>
+      </ModalContainer>
+    </>
+  );
+}
+
+function Modal2({ onClose }) {
+  return (
+    <>
+      <ModalBackground></ModalBackground>
+      <ModalContainer>
+        <ModalText>내용을 모두 입력해주세요.</ModalText>
+        <ModalBtn
+          onClick={() => {
+            onClose();
+          }}
+        >
+          확인
+        </ModalBtn>
+      </ModalContainer>
+    </>
+  );
+}
+
 function ReportWaterway() {
   //const { location, error } = useGeoLocation(geolocationOptions);
   const [location, setLocation] = useState("");
   const [address, setAddress] = useState("");
   const [file, setFile] = useState();
   const [context, setContext] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalOpen2, setModalOpen2] = useState(false);
 
   const handleLocation = (event) => {
     setLocation(event.target.value);
@@ -61,10 +99,12 @@ function ReportWaterway() {
       .then((result) => {
         console.log("요청성공");
         console.log(result);
+        setModalOpen(true);
       })
       .catch((error) => {
         console.log("요청실패");
         console.log(error);
+        setModalOpen2(true);
       });
   };
   return (
@@ -119,6 +159,8 @@ function ReportWaterway() {
           신고 완료!
         </NextBtn>
       </form>
+      {modalOpen && <Modal />}
+      {modalOpen2 && <Modal2 onClose={() => setModalOpen2(false)} />}
     </Container>
   );
 }
@@ -198,6 +240,45 @@ const NextBtn = styled.button`
   color: white;
   position: fixed;
   bottom: 10px;
+`;
+
+const ModalContainer = styled.div`
+  width: 300px;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  z-index: 1001;
+  border-radius: 20px;
+  background-color: white;
+  position: absolute;
+  top: 320px;
+  left: 47px;
+`;
+
+const ModalBtn = styled.button`
+  width: 230px;
+  height: 35px;
+  border: none;
+  border-radius: 15px;
+  background-color: #dceeff;
+`;
+
+const ModalBackground = styled.div`
+  width: 390px;
+  height: 100vh;
+  z-index: 1000;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  background-color: black;
+  opacity: 65%;
+`;
+
+const ModalText = styled.span`
+  font-size: medium;
+  font-weight: 700;
 `;
 
 export default ReportWaterway;

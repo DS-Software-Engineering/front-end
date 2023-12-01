@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import ReportListComponent from "../mypage/ReportListComponent";
+import ReportModal from "../mypage/ReportModal";
 import { getDeclaration, getDeclarationDetail } from "../../api/Mypage";
 
 function ReportWaterwayHistory() {
   const [reportType, setReportType] = useState("2");
   const [reportList, setReportList] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedReport, setSelectedReport] = useState(null);
 
   useEffect(() => {
     fetchReportData("2");
@@ -28,6 +31,11 @@ function ReportWaterwayHistory() {
   const handleTabClick = (type) => {
     setReportType(type);
     fetchReportData(type);
+  };
+
+  const handleReportClick = (report) => {
+    setSelectedReport(report); // 선택된 신고 정보 저장
+    setModalOpen(true);
   };
 
   return (
@@ -53,9 +61,21 @@ function ReportWaterwayHistory() {
             date={formatDate(report.date)}
             address={report.detail_location}
             image={report.image_url}
+            onClick={() => handleReportClick(report)}
           />
         ))}
       </ListBox>
+      {modalOpen && selectedReport && (
+        <ReportModal
+          onClose={() => setModalOpen(false)}
+          id={selectedReport.id}
+          title={selectedReport.address}
+          date={formatDate(selectedReport.date)}
+          address={selectedReport.detail_location}
+          image={selectedReport.image_url}
+          context={selectedReport.context}
+        />
+      )}
     </Container>
   );
 }
