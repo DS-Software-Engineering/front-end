@@ -73,6 +73,7 @@ function ReportTrashHistory() {
           address={selectedReport.detail_location}
           image={selectedReport.image_url}
           context={selectedReport.context}
+          id={selectedReport.id}
         />
       )}
     </Container>
