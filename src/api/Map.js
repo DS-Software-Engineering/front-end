@@ -79,3 +79,16 @@ export const getFavList = async () => {
     throw error;
   }
 };
+export const getMapDetail = async (binId, binType) => {
+  try {
+    const res = await request.get({
+      url: "/map/detail?binId=" + binId + "&binType=" + binType,
+      params: {},
+    });
+    console.log("마커 상세 정보 요청 완료", res);
+    return res;
+  } catch (error) {
+    console.error("마커 상세 정보 요청 오류:", error);
+    throw error;
+  }
+};
