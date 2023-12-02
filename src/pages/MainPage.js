@@ -6,7 +6,6 @@ import { IoTrashOutline } from "react-icons/io5";
 import { BsCupStraw } from "react-icons/bs";
 import { LuCigarette } from "react-icons/lu";
 import { BiRecycle } from "react-icons/bi";
-// import BottomSheet from "../components/main/BottomSheet/BottomSheet";
 import {
   getMap,
   getMapCigarette,
@@ -141,9 +140,10 @@ const Main = () => {
       console.error("재활용 마커 가져오기 오류:", error);
     }
   };
+
   // 하단 쓰레기통 리스트 API 연동
   const [searchList, setSearchList] = useState([]);
-
+  /*
   const listAll = async (keyword) => {
     try {
       const response = await getSearch("");
@@ -154,6 +154,7 @@ const Main = () => {
       console.error("전체 휴지통 검색 목록 가져오기 오류 :", error);
     }
   };
+  */
   const listGen = async (keyword) => {
     try {
       const response = await getSearchGen("");
@@ -205,7 +206,6 @@ const Main = () => {
         setSearchList([]);
         setId(id);
         setCategory(category);
-        console.log(id, category);
         console.log("상세 정보 클릭 성공 :", response);
       } catch (error) {
         console.error("상세 정보 오류 :", error);
@@ -224,17 +224,7 @@ const Main = () => {
       }
     }
   };
-  /*
-  const myDetail = async (id, category) => { // 성동구청 위치
-    try {
-      const response = await getMapDetail(id, category);
-      setDetail(response.data);
-      console.log("상세 정보 클릭 성공 :", response);
-    } catch (error) {
-      console.error("상세 정보 오류 :", error);
-    }
-  };
-  */
+
   useEffect(() => {
     mapscript();
     markerGen();
@@ -243,11 +233,10 @@ const Main = () => {
     markerRecy();
     //markerMap();
   }, []);
+
   useEffect(() => {
     mapscript();
   }, [clickGen, clickDri, clickCb, clickRecy, detail]);
-
-  // 초기 리스트 목록(필터X)/*
 
   const mapscript = () => {
     /*** 지도 띄우기 */
@@ -271,13 +260,9 @@ const Main = () => {
       var moveLatLon = new kakao.maps.LatLng(33.45058, 126.574942);
       // 지도 중심을 부드럽게 이동
       map.panTo(moveLatLon);
-      //map.panTo(handleMove);
     }
 
-    //markerMap();
-
-    // 현재 위치
-
+    // 나의 위치
     var myPosition = new kakao.maps.LatLng( // 기본위치(성동구청)
       37.5634371209034,
       127.036915431973047
@@ -295,13 +280,7 @@ const Main = () => {
       position: myPosition,
       image: mymarkerImage, // 마커 이미지
     });
-    myMarker.setMap(map); // 마커가 지도 위에 표시
-
-    /** 현재 위치 표시 마커에 이벤트 등록 ***
-    kakao.maps.event.addListener(myMarker, "click", () => {
-      myDetail();
-    });
-    */
+    myMarker.setMap(map); // 마커 지도 위에 표시
 
     // latlng를 기반으로 positions 배열 생성
     var positions = latlng.map((request) => ({
@@ -309,9 +288,6 @@ const Main = () => {
       latlng: new kakao.maps.LatLng(request.latitude, request.longtitude),
     }));
 
-    // 마커 이미지의 이미지 주소
-    // var imageSrc =
-    //   "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
     var imageSrc;
     if (category === "general") {
       imageSrc = generalImg;
