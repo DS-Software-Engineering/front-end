@@ -409,18 +409,13 @@ const Main = () => {
                 />
               ))}
               {searchList.map((request, index) => (
-                <StarListComponent
+                <ListComponent
                   id={request.id}
                   title={request.detail_location}
                   category={request.shape}
                   address={request.address}
                   latitude={request.latitude}
                   longtitude={request.longtitude}
-                  type_cb={request.type_cb}
-                  type_drink={request.type_drink}
-                  type_general={request.type_general}
-                  type_recycle={request.type_recycle}
-                  //onClick={handleMove(request.latitude, request.latitude)}
                 />
               ))}
             </ListBox>
@@ -478,7 +473,7 @@ const Wrapper = styled(motion.div)`
 
   position: fixed;
   z-index: 999;
-  top: calc(100% - 180px); /*시트가 얼마나 높이 위치할지*/
+  top: calc(100% - 150px); /*시트가 얼마나 높이 위치할지*/
   left: 0;
   right: 0;
 

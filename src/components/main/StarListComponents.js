@@ -68,7 +68,6 @@ const StarListComponent = (props) => {
             }}
           >
             {star === false ? <FaRegStar /> : <FaStar />}
-
           </Favorite>
           <Image
             id="roadview
@@ -78,7 +77,6 @@ const StarListComponent = (props) => {
               id="images"
               alt="roadview"
               src={latitude ? mapImageUrl : null}
-
               style={{
                 objectFit: props.image ? "cover" : "none",
               }}
@@ -97,7 +95,7 @@ const Container = styled.div`
   width: 100hw;
   margin: auto 0;
   //border: 1px solid #111;
-  padding-top: 10px;
+  //padding-top: 10px;
   padding-left: 5%;
   padding-right: 5%;
 `;
