@@ -10,6 +10,7 @@ import { BiRecycle } from "react-icons/bi";
 import {
   getMap,
   getMapCigarette,
+  getMapDetail,
   getMapDrink,
   getMapGeneral,
   getMapRecycle,
@@ -34,70 +35,72 @@ import StarListComponent from "../components/main/StarListComponents";
 const { kakao } = window;
 
 const Main = () => {
+  const token = localStorage.getItem("token");
   const { sheet, content } = useBottomSheet();
   const [latlng, setLatlng] = useState([]);
-  // var imageSrc;
 
   // 카테고리 선택
   const [clickGen, setClickGen] = useState(false);
   const [clickCb, setClickCb] = useState(false);
   const [clickDri, setClickDri] = useState(false);
   const [clickRecy, setClickRecy] = useState(false);
+  const [category, setCategory] = useState("general");
+  const [id, setId] = useState();
 
   const handleClickGen = async () => {
-    setClickGen(!clickGen);
+    setClickGen(true);
     setClickCb(false);
     setClickDri(false);
     setClickRecy(false);
+    setCategory("general");
+    mapscript();
     markerGen();
     listGen();
-    console.log("일반", clickGen);
-    console.log("음료", clickDri);
-    console.log("담배", clickCb);
-    console.log("재활", clickRecy);
-    console.log("일반 클릭", clickGen);
-    // if (clickGen && clickDri && clickCb && clickRecy === false) {
-    //   markerMap();
-    // }
-  };
-  const handleClickCb = () => {
-    console.log("담배꽁초 클릭", clickCb);
-    setClickCb(!clickCb);
-    setClickGen(false);
-    setClickDri(false);
-    setClickRecy(false);
-    markerCb();
-    listCb();
   };
   const handleClickDri = () => {
-    setClickDri(!clickDri);
+    setClickDri(true);
     setClickGen(false);
     setClickCb(false);
     setClickRecy(false);
+    setCategory("drink");
+    mapscript();
     markerDri();
     listDri();
   };
+  const handleClickCb = () => {
+    setClickCb(true);
+    setClickGen(false);
+    setClickDri(false);
+    setClickRecy(false);
+    setCategory("cb");
+    markerCb();
+    mapscript();
+    listCb();
+  };
   const handleClickRecy = () => {
-    markerRecy();
-    setClickRecy(!clickRecy);
+    setClickRecy(true);
     setClickGen(false);
     setClickCb(false);
     setClickDri(false);
+    setCategory("recycle");
     markerRecy();
+    mapscript();
     listRecy();
   };
 
   // 지도 마커 표시 API 연동
   // 전체 쓰레기통 마커
+  /*
   const markerMap = async () => {
     try {
       const response = await getMap();
-      setLatlng(response.data);
+      //setLatlng(response.data);
       console.log("전체 쓰레기통 목록 가져오기 성공:", response);
     } catch (error) {
       console.error("전체 쓰레기통 목록 가져오기 오류:", error);
     }
   };
+*/
   // 일반쓰레기통 마커
   const markerGen = async () => {
     try {
@@ -138,7 +141,6 @@ const Main = () => {
       console.error("재활용 마커 가져오기 오류:", error);
     }
   };
-
   // 하단 쓰레기통 리스트 API 연동
   const [searchList, setSearchList] = useState([]);
 
@@ -146,6 +148,7 @@ const Main = () => {
     try {
       const response = await getSearch("");
       setSearchList(response.data);
+      setDetail([]);
       console.log("전체 쓰레기통 리스트 가져오기 :", response);
     } catch (error) {
       console.error("전체 휴지통 검색 목록 가져오기 오류 :", error);
@@ -155,6 +158,7 @@ const Main = () => {
     try {
       const response = await getSearchGen("");
       setSearchList(response.data);
+      setDetail([]);
       console.log("일반쓰레기 리스트 가져오기 :", response);
     } catch (error) {
       console.error("일반쓰레기 리스트 가져오기 오류 :", error);
@@ -164,6 +168,7 @@ const Main = () => {
     try {
       const response = await getSearchDrink("");
       setSearchList(response.data);
+      setDetail([]);
       console.log("음료 리스트 가져오기 :", response);
     } catch (error) {
       console.error("음료 리스트 가져오기 오류 :", error);
@@ -173,6 +178,7 @@ const Main = () => {
     try {
       const response = await getSearchCb("");
       setSearchList(response.data);
+      setDetail([]);
       console.log("담배꽁초 리스트 가져오기 :", response);
     } catch (error) {
       console.error("담배꽁초 리스트 가져오기 오류 :", error);
@@ -182,28 +188,66 @@ const Main = () => {
     try {
       const response = await getSearchRecycleBin("");
       setSearchList(response.data);
+      setDetail([]);
       console.log("재활용 리스트 가져오기 :", response);
     } catch (error) {
       console.error("재활용 리스트 가져오기 오류 :", error);
     }
   };
-  /*
-  const handleMove = (latitude, longtitude) => {
-    console.log(latitude, longtitude);
-    var moveLatLon2 = new kakao.maps.LatLng(latitude, longtitude);
-    return moveLatLon2;
-  };*/
 
+  // marker 클릭
+  const [detail, setDetail] = useState([]);
+  const markerDetail = async (id, category) => {
+    if (category === "cb" || category === "drink") {
+      try {
+        const response = await getMapDetail(id, "general");
+        setDetail(response.data);
+        setSearchList([]);
+        setId(id);
+        setCategory(category);
+        console.log(id, category);
+        console.log("상세 정보 클릭 성공 :", response);
+      } catch (error) {
+        console.error("상세 정보 오류 :", error);
+      }
+    } else {
+      try {
+        const response = await getMapDetail(id, category);
+        setDetail(response.data);
+        setSearchList([]);
+        setId(id);
+        setCategory(category);
+        console.log(id, category);
+        console.log("상세 정보 클릭 성공 :", response);
+      } catch (error) {
+        console.error("상세 정보 오류 :", error);
+      }
+    }
+  };
+  /*
+  const myDetail = async (id, category) => { // 성동구청 위치
+    try {
+      const response = await getMapDetail(id, category);
+      setDetail(response.data);
+      console.log("상세 정보 클릭 성공 :", response);
+    } catch (error) {
+      console.error("상세 정보 오류 :", error);
+    }
+  };
+  */
   useEffect(() => {
     mapscript();
-  }, [clickGen, clickDri, clickCb, clickRecy]);
+    markerGen();
+    markerDri();
+    markerCb();
+    markerRecy();
+    //markerMap();
+  }, []);
+  useEffect(() => {
+    mapscript();
+  }, [clickGen, clickDri, clickCb, clickRecy, detail]);
 
   // 초기 리스트 목록(필터X)/*
-  useEffect(() => {
-    listAll();
-    markerMap();
-  }, []);
-  //
 
   const mapscript = () => {
     /*** 지도 띄우기 */
@@ -232,45 +276,50 @@ const Main = () => {
 
     //markerMap();
 
+    // 현재 위치
+
     var myPosition = new kakao.maps.LatLng( // 기본위치(성동구청)
       37.5634371209034,
       127.036915431973047
     );
     var myimageSize = new kakao.maps.Size(24, 35);
-    // 마커 이미지를 생성
-    var myimageSrc =
+
+    var myimageSrc = // 마커 이미지를 생성
       "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+
     var mymarkerImage = new kakao.maps.MarkerImage(myimageSrc, myimageSize);
 
-    // 마커를 생성합니다
     var myMarker = new kakao.maps.Marker({
+      // 마커를 생성
       map: map,
       position: myPosition,
       image: mymarkerImage, // 마커 이미지
     });
-    // 마커가 지도 위에 표시되도록 설정합니다
-    myMarker.setMap(map);
+    myMarker.setMap(map); // 마커가 지도 위에 표시
 
-    // 아래 코드는 지도 위의 마커를 제거하는 코드입니다
-    // marker.setMap(null);
+    /** 현재 위치 표시 마커에 이벤트 등록 ***
+    kakao.maps.event.addListener(myMarker, "click", () => {
+      myDetail();
+    });
+    */
 
     // latlng를 기반으로 positions 배열 생성
     var positions = latlng.map((request) => ({
+      id: request.id,
       latlng: new kakao.maps.LatLng(request.latitude, request.longtitude),
     }));
-    console.log("+++");
 
     // 마커 이미지의 이미지 주소
     // var imageSrc =
     //   "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
     var imageSrc;
-    if (clickGen === true) {
+    if (category === "general") {
       imageSrc = generalImg;
-    } else if (clickDri === true) {
+    } else if (category === "drink") {
       imageSrc = drinkImg;
-    } else if (clickCb === true) {
+    } else if (category === "cb") {
       imageSrc = cbImg;
-    } else if (clickRecy === true) {
+    } else if (category === "recycle") {
       imageSrc = recycleImg;
     } else {
       imageSrc = blankImg;
@@ -286,6 +335,13 @@ const Main = () => {
         map: map, // 마커를 표시할 지도
         position: positions[i].latlng, // 마커를 표시할 위치
         image: markerImage, // 마커 이미지
+      });
+      kakao.maps.event.addListener(marker, "click", () => {
+        if (!token) {
+          window.location.href = "/login";
+        } else {
+          markerDetail(i, category);
+        }
       });
     }
   };
@@ -340,6 +396,18 @@ const Main = () => {
           </Wrapper2>
           <BottomSheetContent ref={content}>
             <ListBox>
+              {detail.map((request, index) => (
+                <StarListComponent
+                  title={request.detail_location}
+                  category={request.shape}
+                  address={request.address}
+                  favorite={request.favorite}
+                  latitude={request.latitude}
+                  longtitude={request.longtitude}
+                  binType={category}
+                  binId={id}
+                />
+              ))}
               {searchList.map((request, index) => (
                 <StarListComponent
                   id={request.id}
@@ -410,7 +478,7 @@ const Wrapper = styled(motion.div)`
 
   position: fixed;
   z-index: 999;
-  top: calc(100% - 90px); /*시트가 얼마나 높이 위치할지*/
+  top: calc(100% - 180px); /*시트가 얼마나 높이 위치할지*/
   left: 0;
   right: 0;
 
@@ -422,7 +490,7 @@ const Wrapper = styled(motion.div)`
   background: #ffffff;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
-  transition: transform 650ms ease-out; /*바텀시트 애니메이션 속도*/
+  transition: transform 350ms ease-out; /*바텀시트 애니메이션 속도*/
 `;
 
 const BottomSheetContent = styled.div`

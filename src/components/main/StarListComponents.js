@@ -5,34 +5,28 @@ import { FaStar } from "react-icons/fa";
 import { deleteFavoriteDelete, postFavoriteCreate } from "../../api/Favorite";
 
 const StarListComponent = (props) => {
-  const Client_id = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
+  // 즐겨찾기 api연동
   const latitude = props.latitude;
   const longtitude = props.longtitude;
+  const binId = props.binId;
+  const binType = props.binType;
+  const [star, setStar] = useState(props.favorite);
+  const token = localStorage.getItem("token");
+  const Client_id = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
   const mapImageUrl = `https://maps.googleapis.com/maps/api/streetview?size=70x70&location=${latitude},${longtitude}&fov=80&heading=70&pitch=0&key=${Client_id}`;
 
-  // 즐겨찾기 api연동
-  const [binId, setBinId] = useState(props.id);
-  const [binType, setBinType] = useState("general"); // ***오류로 인해 기본 general로 해둠
-  const [star, setStar] = useState(false);
-
-  /*
-  if (props.type_general) {
-    setBinType("general");
-  } else if (props.type_drink) {
-    setBinType("drink");
-  } else if (props.type_cb) {
-    setBinType("cb");
-  } else if (props.type_recycle) {
-    setBinType("recycle");
-  }
-  */
-
   const handleFavoriteBtn = () => {
-    setStar(!star);
-    if (!star) {
-      createFavorite();
+    if (!token) {
+      window.location.href = "/login";
     } else {
-      deleteFavorite();
+      console.log(star);
+      if (star === false) {
+        createFavorite();
+      } else {
+        deleteFavorite();
+      }
+      setStar(!star);
+      console.log(star);
     }
   };
 
@@ -73,7 +67,8 @@ const StarListComponent = (props) => {
               handleFavoriteBtn();
             }}
           >
-            {!star ? <FaRegStar /> : <FaStar />}
+            {star === false ? <FaRegStar /> : <FaStar />}
+
           </Favorite>
           <Image
             id="roadview
@@ -82,7 +77,8 @@ const StarListComponent = (props) => {
             <img
               id="images"
               alt="roadview"
-              src={mapImageUrl}
+              src={latitude ? mapImageUrl : null}
+
               style={{
                 objectFit: props.image ? "cover" : "none",
               }}
@@ -91,7 +87,6 @@ const StarListComponent = (props) => {
           </Image>
         </TextBox>
       </Container>
-      <hr />
     </>
   );
 };

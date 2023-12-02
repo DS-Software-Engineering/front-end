@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { TfiClose } from "react-icons/tfi";
 import { BsChevronRight } from "react-icons/bs";
@@ -102,7 +102,6 @@ function Menu({ onClose }) {
   };
 
   const [modalOpen, setModalOpen] = useState(false);
-  const modalBackground = useRef();
 
   const handleClickMyPage = () => {
     if (!token) {
