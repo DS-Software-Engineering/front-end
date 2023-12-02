@@ -49,7 +49,7 @@ function SignUp() {
     try {
       const response = await postSignup(data);
       console.log("성공");
-      //window.location.href = "/";
+      window.location.href = "/";
       if (response.status == 400) {
         setModalOpen5(true);
       }
@@ -148,7 +148,10 @@ function SignUp() {
       <NextBtn onClick={handleButton}>가입하기</NextBtn>
       {modalOpen && (
         <Modal
-          onClose={() => setModalOpen(false)}
+          onClose={() => {
+            setModalOpen(false);
+            setUserId("");
+          }}
           message="중복된 아이디 입니다."
         />
       )}
@@ -160,7 +163,10 @@ function SignUp() {
       )}
       {modalOpen3 && (
         <Modal
-          onClose={() => setModalOpen3(false)}
+          onClose={() => {
+            setModalOpen3(false);
+            setNickname("");
+          }}
           message="중복된 닉네임 입니다."
         />
       )}

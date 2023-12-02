@@ -11,7 +11,7 @@ function Profile() {
   const [reward, setReward] = useState("0");
 
   useEffect(() => {
-    const myInfo = async (keyword) => {
+    const myInfo = async () => {
       try {
         const response = await getMyInfo();
         if (response.status === 200) {
@@ -25,7 +25,9 @@ function Profile() {
         console.error("나의 정보 가져오기 :", error);
       }
     };
-    myInfo();
+    if (token) {
+      myInfo();
+    }
   }, []);
 
   return (
@@ -102,12 +104,20 @@ function Menu({ onClose }) {
   };
 
   const [modalOpen, setModalOpen] = useState(false);
+  const [modalOpen2, setModalOpen2] = useState(false);
 
   const handleClickMyPage = () => {
     if (!token) {
       setModalOpen(true);
     } else {
       window.location.href = "/mypage";
+    }
+  };
+  const handleClickReport = () => {
+    if (!token) {
+      setModalOpen2(true);
+    } else {
+      window.location.href = "/report";
     }
   };
 
@@ -143,11 +153,7 @@ function Menu({ onClose }) {
           >
             <MenuCard menuName="쓰레기통 리스트" />
           </span>
-          <span
-            onClick={() => {
-              window.location.href = "/report";
-            }}
-          >
+          <span onClick={handleClickReport}>
             <MenuCard menuName="신고하기" />
           </span>
           <span
@@ -162,6 +168,7 @@ function Menu({ onClose }) {
           </span>
         </MenuBox>
         {modalOpen && <Modal onClose={() => setModalOpen(false)} />}
+        {modalOpen2 && <Modal onClose={() => setModalOpen2(false)} />}
         {!token ? (
           <LogInBox
             onClick={() => {
