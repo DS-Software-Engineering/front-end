@@ -390,7 +390,14 @@ const Main = () => {
       <RecycleExplainBtn text={"성동 푸르미 재활용 정거장이란?"} />
       <Map id="map"></Map>
       <span id="bottom-sheet">
-        <Wrapper ref={sheet}>
+        <Wrapper
+          ref={sheet}
+          style={
+            clickGen || clickDri || clickCb || clickRecy
+              ? { top: "calc(100% - 150px)" }
+              : { top: "calc(100% - 45px)" }
+          }
+        >
           <Wrapper2>
             <Handle />
           </Wrapper2>
@@ -473,7 +480,7 @@ const Wrapper = styled(motion.div)`
 
   position: fixed;
   z-index: 999;
-  top: calc(100% - 150px); /*시트가 얼마나 높이 위치할지*/
+  //top: calc(100% - 150px); /*시트가 얼마나 높이 위치할지*/
   left: 0;
   right: 0;
 

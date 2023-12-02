@@ -3,17 +3,32 @@ import styled from "styled-components";
 import { AiFillCheckCircle } from "react-icons/ai";
 
 function Terms() {
+  const [allCheck, setAllCheck] = useState(false);
   return (
     <Container>
       <TitleSpan>약관 동의</TitleSpan>
       <LineBox>
-        <InnerBox>
-          <AiFillCheckCircle className="check-icon" color="#1d70b6" />
+        <InnerBox
+          onClick={() => {
+            setAllCheck(!allCheck);
+          }}
+        >
+          {allCheck ? (
+            <AiFillCheckCircle
+              className="check-icon"
+              style={{ color: "#1d70b6" }}
+            />
+          ) : (
+            <AiFillCheckCircle
+              className="check-icon"
+              style={{ color: "#dddddd" }}
+            />
+          )}
           <BigAgreeText>약관 전체 동의</BigAgreeText>
         </InnerBox>
-        <TermBox choice="필수" />
-        <TermBox choice="필수" />
-        <TermBox choice="선택" />
+        <TermBox choice="필수" allCheck={allCheck} />
+        <TermBox choice="필수" allCheck={allCheck} />
+        <TermBox choice="선택" allCheck={allCheck} />
       </LineBox>
       <RegisterBtn
         onClick={() => {
@@ -26,7 +41,7 @@ function Terms() {
   );
 }
 
-function TermBox({ choice }) {
+function TermBox({ choice, allCheck }) {
   const [check, setCheck] = useState(false);
 
   const handleCheck = () => {
@@ -35,7 +50,7 @@ function TermBox({ choice }) {
   return (
     <>
       <InnerBox onClick={handleCheck}>
-        {check ? (
+        {(check && !allCheck) || (!check && allCheck) ? (
           <AiFillCheckCircle
             className="check-icon"
             style={{ color: "#1d70b6" }}

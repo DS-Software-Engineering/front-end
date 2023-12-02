@@ -19,14 +19,12 @@ const StarListComponent = (props) => {
     if (!token) {
       window.location.href = "/login";
     } else {
-      console.log(star);
       if (star === false) {
         createFavorite();
       } else {
         deleteFavorite();
       }
       setStar(!star);
-      console.log(star);
     }
   };
 
@@ -94,13 +92,10 @@ const Container = styled.div`
   cursor: pointer;
   width: 100hw;
   margin: auto 0;
-  //border: 1px solid #111;
-  //padding-top: 10px;
   padding-left: 5%;
   padding-right: 5%;
 `;
 const TextBox = styled.div`
-  //border: 1px solid #111;
   position: relative;
 `;
 const BigText = styled.div`
