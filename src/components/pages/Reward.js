@@ -26,6 +26,11 @@ function Reward() {
     }
   };
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toISOString().split("T")[0]; // Extracting YYYY-MM-DD
+  };
+
   return (
     <Container>
       <TitleSpan>리워드</TitleSpan>
@@ -39,7 +44,7 @@ function Reward() {
         {rewardHistory.map((item) => (
           <RewardListComponent
             title={item.address}
-            date={item.date}
+            date={formatDate(item.date)}
             reward={`+${item.reward} 적립`}
             address={item.detail_location}
           />
