@@ -196,7 +196,7 @@ const ModalContainer = styled.div`
   background-color: white;
   position: absolute;
   top: 320px;
-  left: 55px;
+  left: 47px;
 `;
 
 const ModalBtn = styled.button`

@@ -277,6 +277,7 @@ const Main = () => {
     //markerMap();
 
     // 현재 위치
+
     var myPosition = new kakao.maps.LatLng( // 기본위치(성동구청)
       37.5634371209034,
       127.036915431973047
@@ -294,7 +295,6 @@ const Main = () => {
       position: myPosition,
       image: mymarkerImage, // 마커 이미지
     });
-
     myMarker.setMap(map); // 마커가 지도 위에 표시
 
     /** 현재 위치 표시 마커에 이벤트 등록 ***
@@ -409,7 +409,7 @@ const Main = () => {
                 />
               ))}
               {searchList.map((request, index) => (
-                <ListComponent
+                <StarListComponent
                   id={request.id}
                   title={request.detail_location}
                   category={request.shape}

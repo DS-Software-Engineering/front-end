@@ -10,10 +10,6 @@ const StarListComponent = (props) => {
   const longtitude = props.longtitude;
   const binId = props.binId;
   const binType = props.binType;
-  // var binType;
-  // if (props.binType == "cb" || props.binType == "drink") {
-  //   binType = "general";
-  // }
   const [star, setStar] = useState(props.favorite);
   const token = localStorage.getItem("token");
   const Client_id = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
@@ -72,6 +68,7 @@ const StarListComponent = (props) => {
             }}
           >
             {star === false ? <FaRegStar /> : <FaStar />}
+
           </Favorite>
           <Image
             id="roadview
@@ -81,6 +78,7 @@ const StarListComponent = (props) => {
               id="images"
               alt="roadview"
               src={latitude ? mapImageUrl : null}
+
               style={{
                 objectFit: props.image ? "cover" : "none",
               }}
@@ -139,6 +137,6 @@ const Image = styled.div`
   position: absolute;
   top: 5px;
   right: 0px;
-  background-color: #ffffff;
+  background-color: #909090;
   border-radius: 5px;
 `;
