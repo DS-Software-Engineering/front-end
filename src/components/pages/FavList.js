@@ -1,19 +1,38 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import ListComponent from "../main/ListComponent";
+import FavListComponent from "../mypage/FavListComponent";
 import { getFavList } from "../../api/Map";
 
 function FavList() {
+  const [favList, setFavList] = useState([]);
+
+  useEffect(() => {
+    fetchFavList();
+  }, []);
+
+  const fetchFavList = async () => {
+    try {
+      const response = await getFavList();
+      setFavList(response.data);
+    } catch (error) {
+      console.error("즐겨찾기 목록 정보 요청 오류:", error);
+    }
+  };
   return (
     <Container>
       <TitleSpan>즐겨찾기 목록</TitleSpan>
 
       <ListBox>
-        <ListComponent title="장소명1" category="음료 컵" address="상세주소" />
-        <ListComponent title="장소명2" category="음료 컵" address="상세주소" />
-        <ListComponent title="장소명3" category="음료 컵" address="상세주소" />
-        <ListComponent title="장소명4" category="음료 컵" address="상세주소" />
-        <ListComponent title="장소명5" category="음료 컵" address="상세주소" />
+        {favList.map((request) => (
+          <FavListComponent
+            key={request.binId}
+            title={request.address}
+            category={request.binType}
+            address={request.detail_location}
+            latitude={request.latitude}
+            longtitude={request.longtitude}
+          />
+        ))}
       </ListBox>
     </Container>
   );
