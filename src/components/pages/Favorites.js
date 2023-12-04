@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { IoLocationSharp } from "react-icons/io5";
 import { getFavList } from "../../api/Map";
+import generalImg from "../../assets/img/generalImg.png";
 
 const { kakao } = window;
 
@@ -33,7 +34,7 @@ function Favorites() {
     const container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
     const options = {
       center: new kakao.maps.LatLng(37.5634371209034, 127.03691543197304), //지도의 중심좌표-위도,경도(성동구청)
-      level: 5, //지도의 레벨(확대, 축소 정도)
+      level: 6, //지도의 레벨(확대, 축소 정도)
     };
 
     // 지도 생성 및 객체 리턴
@@ -82,7 +83,7 @@ function Favorites() {
       // 마커 이미지의 이미지 크기
       var imageSize = new kakao.maps.Size(24, 35);
       // 마커 이미지를 생성
-      var markerImage = new kakao.maps.MarkerImage(myimageSrc, imageSize);
+      var markerImage = new kakao.maps.MarkerImage(generalImg, imageSize);
       // 마커를 생성
       var marker = new kakao.maps.Marker({
         map: map, // 마커를 표시할 지도
