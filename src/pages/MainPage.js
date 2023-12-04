@@ -387,7 +387,11 @@ const Main = () => {
                   favorite={request.favorite}
                   latitude={request.latitude}
                   longtitude={request.longtitude}
-                  binType={category}
+                  binType={
+                    category === "drink" || category === "cb"
+                      ? "general"
+                      : category
+                  }
                   binId={id}
                 />
               ))}

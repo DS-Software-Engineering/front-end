@@ -72,10 +72,10 @@ export const getFavList = async () => {
       url: "/myPage/favoriteBin",
       params: {},
     });
-    console.log("내 정보 요청 완료", res);
+    console.log("즐겨찾기 목록 정보 요청 완료", res);
     return res;
   } catch (error) {
-    console.error("내 정보 요청 오류:", error);
+    console.error("즐겨찾기 목록 정보 요청 오류:", error);
     throw error;
   }
 };
