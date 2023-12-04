@@ -40,6 +40,7 @@ const MainExample = () => {
       <ListBox>
         {exampleList.map((request) => (
           <ExampleComponent
+            key={request.id}
             id={request.id}
             title={request.title}
             context={request.context}

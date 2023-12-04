@@ -12,7 +12,6 @@ const MainExamplePost = () => {
 
   const handleTitle = (event) => {
     setTitle(event.target.value);
-    console.log(title);
   };
   const handleContext = (event) => {
     setContext(event.target.value);
@@ -69,17 +68,15 @@ const MainExamplePost = () => {
         </Box>
         <Box>
           <SubTitleSpan>사진</SubTitleSpan>
-          <form>
-            <input
-              type="file"
-              id="avatar"
-              name="avatar"
-              accept="image/*"
-              multiple={true}
-              onChange={onChangeImg}
-              ref={imgInput}
-            />
-          </form>
+          <input
+            type="file"
+            id="avatar"
+            name="avatar"
+            accept="image/*"
+            multiple={true}
+            onChange={onChangeImg}
+            ref={imgInput}
+          />
         </Box>
         <Box2>
           <SubTitleSpan>내용</SubTitleSpan>
