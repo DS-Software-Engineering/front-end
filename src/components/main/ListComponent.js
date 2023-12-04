@@ -41,7 +41,7 @@ const Container = styled.div`
   width: 100hw;
   margin: auto 0;
   //border: 1px solid #111;
-  padding-top: 10px;
+  padding-top: 20px;
   padding-left: 5%;
   padding-right: 5%;
 `;
