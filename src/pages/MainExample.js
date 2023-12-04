@@ -44,7 +44,7 @@ const MainExample = () => {
             id={request.id}
             title={request.title}
             context={request.context}
-            date={request.date}
+            date={request.date.split("T")[0]}
             image={request.image_url}
             userNickname={request.userNickname}
           />

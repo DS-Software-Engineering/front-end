@@ -28,10 +28,10 @@ const MainExampleDetail = (props) => {
     <Container>
       <Name>[주요 처리 사례]</Name>
       {exampleDetailList.map((request, id) => (
-        <>
+        <div key={request.id}>
           <TopBox>
             <Title>{request.title}</Title>
-            <Date>{request.date}</Date>
+            <Date>{request.date.split("T")[0]}</Date>
           </TopBox>
           <hr />
           <BottomBox>
@@ -53,7 +53,7 @@ const MainExampleDetail = (props) => {
             <Content>{request.context}</Content>
             <Author>{request.userNickname}</Author>
           </BottomBox>
-        </>
+        </div>
       ))}
       <ListButton
         onClick={() => {
