@@ -56,7 +56,7 @@ function ReportWaterway() {
 
   const handleLocation = (event) => {
     setLocation(event.target.value);
-    console.log(location);
+    //console.log(location);
   };
   const handleAddress = (event) => {
     setAddress(event.target.value);

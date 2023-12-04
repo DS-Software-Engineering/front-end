@@ -29,10 +29,6 @@ const Search = () => {
     setClickCb(false);
     setClickDri(false);
     setClickRecy(false);
-    console.log("일반", clickGen);
-    console.log("음료", clickDri);
-    console.log("담배", clickCb);
-    console.log("재활", clickRecy);
     if (clickGen || clickDri || clickCb || clickRecy === true) {
       fetchData(searchKeyword);
     }
@@ -63,10 +59,6 @@ const Search = () => {
     setClickGen(false);
     setClickCb(false);
     setClickDri(false);
-    console.log("일반", clickGen);
-    console.log("음료", clickDri);
-    console.log("담배", clickCb);
-    console.log("재활", clickRecy);
     if (clickGen || clickDri || clickCb || clickRecy === true) {
       fetchData(searchKeyword);
     }
@@ -91,7 +83,6 @@ const Search = () => {
     // 일반쓰레기 필터
     try {
       const response = await getSearchGen(keyword);
-      console.log("검색어 :", keyword);
       console.log("일반휴지통 검색 목록 가져오기 :", response);
       setSearchList(response.data);
     } catch (error) {
@@ -102,7 +93,6 @@ const Search = () => {
     // 음료컵 필터
     try {
       const response = await getSearchDrink(keyword);
-      console.log("검색어 :", keyword);
       console.log("음료컵 검색 목록 가져오기 :", response);
       setSearchList(response.data);
     } catch (error) {
@@ -113,7 +103,6 @@ const Search = () => {
     // 담배꽁초 필터
     try {
       const response = await getSearchCb(keyword);
-      console.log("검색어 :", keyword);
       console.log("담배꽁초 검색 목록 가져오기 :", response);
       setSearchList(response.data);
     } catch (error) {
@@ -125,7 +114,6 @@ const Search = () => {
     try {
       //const response = await getSearchRecycleBin(keyword);
       const response2 = await getSearchRecycle(keyword);
-      console.log("검색어 :", keyword);
       console.log("재활용 및 정거장 검색 목록 가져오기 :", response2);
       setSearchList(response2.data);
     } catch (error) {
@@ -204,8 +192,9 @@ const Search = () => {
         </Category>
       </CategoryBox>
       <ListBox>
-        {searchList.map((request) => (
+        {searchList.map((request, index) => (
           <ListComponent
+            key={index}
             id={request.id}
             title={request.detail_location}
             category={request.shape}

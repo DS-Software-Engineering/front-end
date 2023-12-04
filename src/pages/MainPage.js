@@ -217,7 +217,6 @@ const Main = () => {
         setSearchList([]);
         setId(id);
         setCategory(category);
-        console.log(id, category);
         console.log("상세 정보 클릭 성공 :", response);
       } catch (error) {
         console.error("상세 정보 오류 :", error);
@@ -381,6 +380,8 @@ const Main = () => {
             <ListBox>
               {detail.map((request, index) => (
                 <StarListComponent
+                  key={request}
+                  id={request.id}
                   title={request.detail_location}
                   category={request.shape}
                   address={request.address}
@@ -397,6 +398,7 @@ const Main = () => {
               ))}
               {searchList.map((request, index) => (
                 <ListComponent
+                  key={request.id}
                   id={request.id}
                   title={request.detail_location}
                   category={request.shape}
