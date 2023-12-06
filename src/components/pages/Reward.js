@@ -43,6 +43,7 @@ function Reward() {
       <ListBox>
         {rewardHistory.map((item) => (
           <RewardListComponent
+            key={item.id}
             title={item.address}
             date={formatDate(item.date)}
             reward={`+${item.reward} 적립`}
