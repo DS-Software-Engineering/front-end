@@ -24,6 +24,14 @@ const MainExampleDetail = (props) => {
   // 여러장 이미지 보여주기
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
+  // const handleImg = (image) => {
+  //   setCurrentImageIndex((prevIndex) => (prevIndex + 1) % image.length);
+  // };
+  const handleImg = (image) => {
+    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % 2);
+    //   setCurrentImageIndex((prevIndex) => (prevIndex + 1) % image.length);
+  };
+
   return (
     <Container>
       <Name>[주요 처리 사례]</Name>
@@ -43,11 +51,7 @@ const MainExampleDetail = (props) => {
                 style={{
                   objectFit: request.image_url.length === 0 ? "none" : "cover",
                 }}
-                onClick={() => {
-                  setCurrentImageIndex(
-                    (prevIndex) => (prevIndex + 1) % request.image_url.length
-                  );
-                }}
+                onClick={handleImg}
               />
             </Image>
             <Content>{request.context}</Content>
